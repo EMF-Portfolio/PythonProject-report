@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universo ticker</title>
+  <style>
+    :root { --bg:#f6f7f9; --panel:#fff; --ink:#17202a; --muted:#657080; --line:#d8dee6; --accent:#1769aa; --good:#13795b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
+    header { background:#111827; color:white; padding:28px 36px; }
+    header h1 { margin:0 0 8px; font-size:28px; }
+    header p { margin:0; color:#cbd5e1; max-width:980px; }
+    nav { display:flex; flex-wrap:wrap; gap:8px; padding:10px 36px; background:#2c3e50; border-bottom:1px solid #22313f; position:sticky; top:0; z-index:2; }
+    nav a { color:#ecf0f1; text-decoration:none; font-weight:800; padding:7px 11px; border-radius:6px; border:1px solid rgba(255,255,255,.18); }
+    nav a.primary { background:#f4b400; color:#17202a; border-color:#d89a00; }
+    main { max-width:1180px; margin:0 auto; padding:24px; }
+    section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:22px; }
+    .meta { color:var(--muted); font-size:14px; margin:8px 0 16px; }
+    .stats { display:flex; flex-wrap:wrap; gap:12px; margin:16px 0; }
+    .stat { background:#f9fafb; border:1px solid var(--line); border-radius:8px; padding:10px 14px; min-width:150px; }
+    .stat b { display:block; font-size:20px; margin-top:2px; }
+    .tools { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+    .tools input { min-width:260px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:14px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; background:white; }
+    th,td { border:1px solid var(--line); padding:9px 10px; text-align:left; vertical-align:top; }
+    th { background:#eef2f7; font-size:13px; text-transform:uppercase; letter-spacing:.02em; cursor:pointer; }
+    .used { color:var(--good); font-weight:800; }
+    .not-used { color:#9ca3af; }
+    .table-wrap { overflow-x:auto; }
+    @media (max-width:760px) { header,nav { padding-left:18px; padding-right:18px; } main { padding:16px; } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Universo ticker</h1>
+    <p>Tutti i ticker presenti nel paniere Strategy 1 e quelli effettivamente usati nel report/backtest principale.</p>
+  </header>
+  <nav>
+    <a class="primary" href="backtest/2026-07-09_15-04/full_report.html">Report principale</a>
+    <a href="ticker_universe.html">Ticker universe</a>
+    <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
+  </nav>
+  <main>
+    <section>
+      <p class="meta">Sorgente report principale: <code>results/backtest/2026-07-09_15-04</code></p>
+      <div class="stats">
+        <div class="stat">Ticker totali<b>522</b></div>
+        <div class="stat">Ticker USED<b>18</b></div>
+        <div class="stat">Solo paniere/S1<b>504</b></div>
+      </div>
+      <div class="tools">
+        <input id="q" type="search" placeholder="Filtra ticker, tipo asset, file o strategie" oninput="filterRows()">
+      </div>
+      <div class="table-wrap">
+        <table id="ticker-table">
+          <thead>
+            <tr>
+              <th onclick="sortTable(0)">Ticker</th>
+              <th onclick="sortTable(1)">Stato Backtest</th>
+              <th onclick="sortTable(2)">Tipo Asset</th>
+              <th onclick="sortTable(3)">File dati</th>
+              <th onclick="sortTable(4)">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+<tr><td><b>AGG</b></td><td class="used">USED</td><td>ETF Bond</td><td>AGG.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>BTC</b></td><td class="used">USED</td><td>Crypto</td><td>BTC.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>EEM</b></td><td class="used">USED</td><td>ETF Equity Globale</td><td>EEM.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>GDX</b></td><td class="used">USED</td><td>ETF Metalli</td><td>GDX.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>GLD</b></td><td class="used">USED</td><td>ETF Metalli</td><td>GLD.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>IEF</b></td><td class="used">USED</td><td>ETF Bond</td><td>IEF.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>IWM</b></td><td class="used">USED</td><td>ETF Equity US</td><td>IWM.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>PPLT</b></td><td class="used">USED</td><td>ETF Metalli</td><td>PPLT.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>QQQ</b></td><td class="used">USED</td><td>ETF Equity US</td><td>QQQ.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>SHY</b></td><td class="used">USED</td><td>ETF Bond</td><td>SHY.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>SLV</b></td><td class="used">USED</td><td>ETF Metalli</td><td>SLV.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>SMCX</b></td><td class="used">USED</td><td>ETF Equity Leveraged</td><td>SMCX.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S14, S15, S16</td></tr>
+<tr><td><b>SPY</b></td><td class="used">USED</td><td>ETF Equity US</td><td>SPY.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>SPYX</b></td><td class="used">USED</td><td>ETF Equity US</td><td>SPYX.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>TLT</b></td><td class="used">USED</td><td>ETF Bond</td><td>TLT.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>UGA</b></td><td class="used">USED</td><td>ETF Energia</td><td>UGA.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>USO</b></td><td class="used">USED</td><td>ETF Energia</td><td>USO.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>VT</b></td><td class="used">USED</td><td>ETF Equity Globale</td><td>VT.csv</td><td>S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S14, S15, S16</td></tr>
+<tr><td><b>A</b></td><td class="not-used"></td><td>Azione US</td><td>A.csv</td><td>S1</td></tr>
+<tr><td><b>AAPL</b></td><td class="not-used"></td><td>Azione US</td><td>AAPL.csv</td><td>S1</td></tr>
+<tr><td><b>ABBV</b></td><td class="not-used"></td><td>Azione US</td><td>ABBV.csv</td><td>S1</td></tr>
+<tr><td><b>ABNB</b></td><td class="not-used"></td><td>Azione US</td><td>ABNB.csv</td><td>S1</td></tr>
+<tr><td><b>ABT</b></td><td class="not-used"></td><td>Azione US</td><td>ABT.csv</td><td>S1</td></tr>
+<tr><td><b>ACGL</b></td><td class="not-used"></td><td>Azione US</td><td>ACGL.csv</td><td>S1</td></tr>
+<tr><td><b>ACN</b></td><td class="not-used"></td><td>Azione US</td><td>ACN.csv</td><td>S1</td></tr>
+<tr><td><b>ADBE</b></td><td class="not-used"></td><td>Azione US</td><td>ADBE.csv</td><td>S1</td></tr>
+<tr><td><b>ADI</b></td><td class="not-used"></td><td>Azione US</td><td>ADI.csv</td><td>S1</td></tr>
+<tr><td><b>ADM</b></td><td class="not-used"></td><td>Azione US</td><td>ADM.csv</td><td>S1</td></tr>
+<tr><td><b>ADP</b></td><td class="not-used"></td><td>Azione US</td><td>ADP.csv</td><td>S1</td></tr>
+<tr><td><b>ADSK</b></td><td class="not-used"></td><td>Azione US</td><td>ADSK.csv</td><td>S1</td></tr>
+<tr><td><b>AEE</b></td><td class="not-used"></td><td>Azione US</td><td>AEE.csv</td><td>S1</td></tr>
+<tr><td><b>AEP</b></td><td class="not-used"></td><td>Azione US</td><td>AEP.csv</td><td>S1</td></tr>
+<tr><td><b>AES</b></td><td class="not-used"></td><td>Azione US</td><td>AES.csv</td><td>S1</td></tr>
+<tr><td><b>AFL</b></td><td class="not-used"></td><td>Azione US</td><td>AFL.csv</td><td>S1</td></tr>
+<tr><td><b>AIG</b></td><td class="not-used"></td><td>Azione US</td><td>AIG.csv</td><td>S1</td></tr>
+<tr><td><b>AIZ</b></td><td class="not-used"></td><td>Azione US</td><td>AIZ.csv</td><td>S1</td></tr>
+<tr><td><b>AJG</b></td><td class="not-used"></td><td>Azione US</td><td>AJG.csv</td><td>S1</td></tr>
+<tr><td><b>AKAM</b></td><td class="not-used"></td><td>Azione US</td><td>AKAM.csv</td><td>S1</td></tr>
+<tr><td><b>ALB</b></td><td class="not-used"></td><td>Azione US</td><td>ALB.csv</td><td>S1</td></tr>
+<tr><td><b>ALGN</b></td><td class="not-used"></td><td>Azione US</td><td>ALGN.csv</td><td>S1</td></tr>
+<tr><td><b>ALL</b></td><td class="not-used"></td><td>Azione US</td><td>ALL.csv</td><td>S1</td></tr>
+<tr><td><b>ALLE</b></td><td class="not-used"></td><td>Azione US</td><td>ALLE.csv</td><td>S1</td></tr>
+<tr><td><b>AMAT</b></td><td class="not-used"></td><td>Azione US</td><td>AMAT.csv</td><td>S1</td></tr>
+<tr><td><b>AMCR</b></td><td class="not-used"></td><td>Azione US</td><td>AMCR.csv</td><td>S1</td></tr>
+<tr><td><b>AMD</b></td><td class="not-used"></td><td>Azione US</td><td>AMD.csv</td><td>S1</td></tr>
+<tr><td><b>AME</b></td><td class="not-used"></td><td>Azione US</td><td>AME.csv</td><td>S1</td></tr>
+<tr><td><b>AMGN</b></td><td class="not-used"></td><td>Azione US</td><td>AMGN.csv</td><td>S1</td></tr>
+<tr><td><b>AMP</b></td><td class="not-used"></td><td>Azione US</td><td>AMP.csv</td><td>S1</td></tr>
+<tr><td><b>AMT</b></td><td class="not-used"></td><td>Azione US</td><td>AMT.csv</td><td>S1</td></tr>
+<tr><td><b>AMZN</b></td><td class="not-used"></td><td>Azione US</td><td>AMZN.csv</td><td>S1</td></tr>
+<tr><td><b>ANET</b></td><td class="not-used"></td><td>Azione US</td><td>ANET.csv</td><td>S1</td></tr>
+<tr><td><b>AON</b></td><td class="not-used"></td><td>Azione US</td><td>AON.csv</td><td>S1</td></tr>
+<tr><td><b>AOS</b></td><td class="not-used"></td><td>Azione US</td><td>AOS.csv</td><td>S1</td></tr>
+<tr><td><b>APA</b></td><td class="not-used"></td><td>Azione US</td><td>APA.csv</td><td>S1</td></tr>
+<tr><td><b>APD</b></td><td class="not-used"></td><td>Azione US</td><td>APD.csv</td><td>S1</td></tr>
+<tr><td><b>APH</b></td><td class="not-used"></td><td>Azione US</td><td>APH.csv</td><td>S1</td></tr>
+<tr><td><b>APO</b></td><td class="not-used"></td><td>Azione US</td><td>APO.csv</td><td>S1</td></tr>
+<tr><td><b>APP</b></td><td class="not-used"></td><td>Azione US</td><td>APP.csv</td><td>S1</td></tr>
+<tr><td><b>APTV</b></td><td class="not-used"></td><td>Azione US</td><td>APTV.csv</td><td>S1</td></tr>
+<tr><td><b>ARE</b></td><td class="not-used"></td><td>Azione US</td><td>ARE.csv</td><td>S1</td></tr>
+<tr><td><b>ARES</b></td><td class="not-used"></td><td>Azione US</td><td>ARES.csv</td><td>S1</td></tr>
+<tr><td><b>ATO</b></td><td class="not-used"></td><td>Azione US</td><td>ATO.csv</td><td>S1</td></tr>
+<tr><td><b>AVB</b></td><td class="not-used"></td><td>Azione US</td><td>AVB.csv</td><td>S1</td></tr>
+<tr><td><b>AVGO</b></td><td class="not-used"></td><td>Azione US</td><td>AVGO.csv</td><td>S1</td></tr>
+<tr><td><b>AVY</b></td><td class="not-used"></td><td>Azione US</td><td>AVY.csv</td><td>S1</td></tr>
+<tr><td><b>AWK</b></td><td class="not-used"></td><td>Azione US</td><td>AWK.csv</td><td>S1</td></tr>
+<tr><td><b>AXON</b></td><td class="not-used"></td><td>Azione US</td><td>AXON.csv</td><td>S1</td></tr>
+<tr><td><b>AXP</b></td><td class="not-used"></td><td>Azione US</td><td>AXP.csv</td><td>S1</td></tr>
+<tr><td><b>AZO</b></td><td class="not-used"></td><td>Azione US</td><td>AZO.csv</td><td>S1</td></tr>
+<tr><td><b>BA</b></td><td class="not-used"></td><td>Azione US</td><td>BA.csv</td><td>S1</td></tr>
+<tr><td><b>BAC</b></td><td class="not-used"></td><td>Azione US</td><td>BAC.csv</td><td>S1</td></tr>
+<tr><td><b>BALL</b></td><td class="not-used"></td><td>Azione US</td><td>BALL.csv</td><td>S1</td></tr>
+<tr><td><b>BAX</b></td><td class="not-used"></td><td>Azione US</td><td>BAX.csv</td><td>S1</td></tr>
+<tr><td><b>BBY</b></td><td class="not-used"></td><td>Azione US</td><td>BBY.csv</td><td>S1</td></tr>
+<tr><td><b>BDX</b></td><td class="not-used"></td><td>Azione US</td><td>BDX.csv</td><td>S1</td></tr>
+<tr><td><b>BEN</b></td><td class="not-used"></td><td>Azione US</td><td>BEN.csv</td><td>S1</td></tr>
+<tr><td><b>BF-B</b></td><td class="not-used"></td><td>Azione US</td><td>BF-B.csv</td><td>S1</td></tr>
+<tr><td><b>BG</b></td><td class="not-used"></td><td>Azione US</td><td>BG.csv</td><td>S1</td></tr>
+<tr><td><b>BIIB</b></td><td class="not-used"></td><td>Azione US</td><td>BIIB.csv</td><td>S1</td></tr>
+<tr><td><b>BK</b></td><td class="not-used"></td><td>Azione US</td><td>BK.csv</td><td>S1</td></tr>
+<tr><td><b>BKNG</b></td><td class="not-used"></td><td>Azione US</td><td>BKNG.csv</td><td>S1</td></tr>
+<tr><td><b>BKR</b></td><td class="not-used"></td><td>Azione US</td><td>BKR.csv</td><td>S1</td></tr>
+<tr><td><b>BLDR</b></td><td class="not-used"></td><td>Azione US</td><td>BLDR.csv</td><td>S1</td></tr>
+<tr><td><b>BLK</b></td><td class="not-used"></td><td>Azione US</td><td>BLK.csv</td><td>S1</td></tr>
+<tr><td><b>BMY</b></td><td class="not-used"></td><td>Azione US</td><td>BMY.csv</td><td>S1</td></tr>
+<tr><td><b>BR</b></td><td class="not-used"></td><td>Azione US</td><td>BR.csv</td><td>S1</td></tr>
+<tr><td><b>BRK-B</b></td><td class="not-used"></td><td>Azione US</td><td>BRK-B.csv</td><td>S1</td></tr>
+<tr><td><b>BRO</b></td><td class="not-used"></td><td>Azione US</td><td>BRO.csv</td><td>S1</td></tr>
+<tr><td><b>BSX</b></td><td class="not-used"></td><td>Azione US</td><td>BSX.csv</td><td>S1</td></tr>
+<tr><td><b>BX</b></td><td class="not-used"></td><td>Azione US</td><td>BX.csv</td><td>S1</td></tr>
+<tr><td><b>BXP</b></td><td class="not-used"></td><td>Azione US</td><td>BXP.csv</td><td>S1</td></tr>
+<tr><td><b>C</b></td><td class="not-used"></td><td>Azione US</td><td>C.csv</td><td>S1</td></tr>
+<tr><td><b>CAG</b></td><td class="not-used"></td><td>Azione US</td><td>CAG.csv</td><td>S1</td></tr>
+<tr><td><b>CAH</b></td><td class="not-used"></td><td>Azione US</td><td>CAH.csv</td><td>S1</td></tr>
+<tr><td><b>CARR</b></td><td class="not-used"></td><td>Azione US</td><td>CARR.csv</td><td>S1</td></tr>
+<tr><td><b>CASY</b></td><td class="not-used"></td><td>Azione US</td><td>CASY.csv</td><td>S1</td></tr>
+<tr><td><b>CAT</b></td><td class="not-used"></td><td>Azione US</td><td>CAT.csv</td><td>S1</td></tr>
+<tr><td><b>CB</b></td><td class="not-used"></td><td>Azione US</td><td>CB.csv</td><td>S1</td></tr>
+<tr><td><b>CBOE</b></td><td class="not-used"></td><td>Azione US</td><td>CBOE.csv</td><td>S1</td></tr>
+<tr><td><b>CBRE</b></td><td class="not-used"></td><td>Azione US</td><td>CBRE.csv</td><td>S1</td></tr>
+<tr><td><b>CCI</b></td><td class="not-used"></td><td>Azione US</td><td>CCI.csv</td><td>S1</td></tr>
+<tr><td><b>CCL</b></td><td class="not-used"></td><td>Azione US</td><td>CCL.csv</td><td>S1</td></tr>
+<tr><td><b>CDNS</b></td><td class="not-used"></td><td>Azione US</td><td>CDNS.csv</td><td>S1</td></tr>
+<tr><td><b>CDW</b></td><td class="not-used"></td><td>Azione US</td><td>CDW.csv</td><td>S1</td></tr>
+<tr><td><b>CEG</b></td><td class="not-used"></td><td>Azione US</td><td>CEG.csv</td><td>S1</td></tr>
+<tr><td><b>CF</b></td><td class="not-used"></td><td>Azione US</td><td>CF.csv</td><td>S1</td></tr>
+<tr><td><b>CFG</b></td><td class="not-used"></td><td>Azione US</td><td>CFG.csv</td><td>S1</td></tr>
+<tr><td><b>CHD</b></td><td class="not-used"></td><td>Azione US</td><td>CHD.csv</td><td>S1</td></tr>
+<tr><td><b>CHRW</b></td><td class="not-used"></td><td>Azione US</td><td>CHRW.csv</td><td>S1</td></tr>
+<tr><td><b>CHTR</b></td><td class="not-used"></td><td>Azione US</td><td>CHTR.csv</td><td>S1</td></tr>
+<tr><td><b>CI</b></td><td class="not-used"></td><td>Azione US</td><td>CI.csv</td><td>S1</td></tr>
+<tr><td><b>CIEN</b></td><td class="not-used"></td><td>Azione US</td><td>CIEN.csv</td><td>S1</td></tr>
+<tr><td><b>CINF</b></td><td class="not-used"></td><td>Azione US</td><td>CINF.csv</td><td>S1</td></tr>
+<tr><td><b>CL</b></td><td class="not-used"></td><td>Azione US</td><td>CL.csv</td><td>S1</td></tr>
+<tr><td><b>CLX</b></td><td class="not-used"></td><td>Azione US</td><td>CLX.csv</td><td>S1</td></tr>
+<tr><td><b>CMCSA</b></td><td class="not-used"></td><td>Azione US</td><td>CMCSA.csv</td><td>S1</td></tr>
+<tr><td><b>CME</b></td><td class="not-used"></td><td>Azione US</td><td>CME.csv</td><td>S1</td></tr>
+<tr><td><b>CMG</b></td><td class="not-used"></td><td>Azione US</td><td>CMG.csv</td><td>S1</td></tr>
+<tr><td><b>CMI</b></td><td class="not-used"></td><td>Azione US</td><td>CMI.csv</td><td>S1</td></tr>
+<tr><td><b>CMS</b></td><td class="not-used"></td><td>Azione US</td><td>CMS.csv</td><td>S1</td></tr>
+<tr><td><b>CNC</b></td><td class="not-used"></td><td>Azione US</td><td>CNC.csv</td><td>S1</td></tr>
+<tr><td><b>CNP</b></td><td class="not-used"></td><td>Azione US</td><td>CNP.csv</td><td>S1</td></tr>
+<tr><td><b>COF</b></td><td class="not-used"></td><td>Azione US</td><td>COF.csv</td><td>S1</td></tr>
+<tr><td><b>COHR</b></td><td class="not-used"></td><td>Azione US</td><td>COHR.csv</td><td>S1</td></tr>
+<tr><td><b>COIN</b></td><td class="not-used"></td><td>Azione US</td><td>COIN.csv</td><td>S1</td></tr>
+<tr><td><b>COO</b></td><td class="not-used"></td><td>Azione US</td><td>COO.csv</td><td>S1</td></tr>
+<tr><td><b>COP</b></td><td class="not-used"></td><td>Azione US</td><td>COP.csv</td><td>S1</td></tr>
+<tr><td><b>COR</b></td><td class="not-used"></td><td>Azione US</td><td>COR.csv</td><td>S1</td></tr>
+<tr><td><b>COST</b></td><td class="not-used"></td><td>Azione US</td><td>COST.csv</td><td>S1</td></tr>
+<tr><td><b>CPAY</b></td><td class="not-used"></td><td>Azione US</td><td>CPAY.csv</td><td>S1</td></tr>
+<tr><td><b>CPB</b></td><td class="not-used"></td><td>Azione US</td><td>CPB.csv</td><td>S1</td></tr>
+<tr><td><b>CPRT</b></td><td class="not-used"></td><td>Azione US</td><td>CPRT.csv</td><td>S1</td></tr>
+<tr><td><b>CPT</b></td><td class="not-used"></td><td>Azione US</td><td>CPT.csv</td><td>S1</td></tr>
+<tr><td><b>CRH</b></td><td class="not-used"></td><td>Azione US</td><td>CRH.csv</td><td>S1</td></tr>
+<tr><td><b>CRL</b></td><td class="not-used"></td><td>Azione US</td><td>CRL.csv</td><td>S1</td></tr>
+<tr><td><b>CRM</b></td><td class="not-used"></td><td>Azione US</td><td>CRM.csv</td><td>S1</td></tr>
+<tr><td><b>CRWD</b></td><td class="not-used"></td><td>Azione US</td><td>CRWD.csv</td><td>S1</td></tr>
+<tr><td><b>CSCO</b></td><td class="not-used"></td><td>Azione US</td><td>CSCO.csv</td><td>S1</td></tr>
+<tr><td><b>CSGP</b></td><td class="not-used"></td><td>Azione US</td><td>CSGP.csv</td><td>S1</td></tr>
+<tr><td><b>CSX</b></td><td class="not-used"></td><td>Azione US</td><td>CSX.csv</td><td>S1</td></tr>
+<tr><td><b>CTAS</b></td><td class="not-used"></td><td>Azione US</td><td>CTAS.csv</td><td>S1</td></tr>
+<tr><td><b>CTRA</b></td><td class="not-used"></td><td>Azione US</td><td>CTRA.csv</td><td>S1</td></tr>
+<tr><td><b>CTSH</b></td><td class="not-used"></td><td>Azione US</td><td>CTSH.csv</td><td>S1</td></tr>
+<tr><td><b>CTVA</b></td><td class="not-used"></td><td>Azione US</td><td>CTVA.csv</td><td>S1</td></tr>
+<tr><td><b>CVNA</b></td><td class="not-used"></td><td>Azione US</td><td>CVNA.csv</td><td>S1</td></tr>
+<tr><td><b>CVS</b></td><td class="not-used"></td><td>Azione US</td><td>CVS.csv</td><td>S1</td></tr>
+<tr><td><b>CVX</b></td><td class="not-used"></td><td>Azione US</td><td>CVX.csv</td><td>S1</td></tr>
+<tr><td><b>D</b></td><td class="not-used"></td><td>Azione US</td><td>D.csv</td><td>S1</td></tr>
+<tr><td><b>DAL</b></td><td class="not-used"></td><td>Azione US</td><td>DAL.csv</td><td>S1</td></tr>
+<tr><td><b>DASH</b></td><td class="not-used"></td><td>Azione US</td><td>DASH.csv</td><td>S1</td></tr>
+<tr><td><b>DD</b></td><td class="not-used"></td><td>Azione US</td><td>DD.csv</td><td>S1</td></tr>
+<tr><td><b>DDOG</b></td><td class="not-used"></td><td>Azione US</td><td>DDOG.csv</td><td>S1</td></tr>
+<tr><td><b>DE</b></td><td class="not-used"></td><td>Azione US</td><td>DE.csv</td><td>S1</td></tr>
+<tr><td><b>DECK</b></td><td class="not-used"></td><td>Azione US</td><td>DECK.csv</td><td>S1</td></tr>
+<tr><td><b>DELL</b></td><td class="not-used"></td><td>Azione US</td><td>DELL.csv</td><td>S1</td></tr>
+<tr><td><b>DG</b></td><td class="not-used"></td><td>Azione US</td><td>DG.csv</td><td>S1</td></tr>
+<tr><td><b>DGX</b></td><td class="not-used"></td><td>Azione US</td><td>DGX.csv</td><td>S1</td></tr>
+<tr><td><b>DHI</b></td><td class="not-used"></td><td>Azione US</td><td>DHI.csv</td><td>S1</td></tr>
+<tr><td><b>DHR</b></td><td class="not-used"></td><td>Azione US</td><td>DHR.csv</td><td>S1</td></tr>
+<tr><td><b>DIS</b></td><td class="not-used"></td><td>Azione US</td><td>DIS.csv</td><td>S1</td></tr>
+<tr><td><b>DLR</b></td><td class="not-used"></td><td>Azione US</td><td>DLR.csv</td><td>S1</td></tr>
+<tr><td><b>DLTR</b></td><td class="not-used"></td><td>Azione US</td><td>DLTR.csv</td><td>S1</td></tr>
+<tr><td><b>DOC</b></td><td class="not-used"></td><td>Azione US</td><td>DOC.csv</td><td>S1</td></tr>
+<tr><td><b>DOV</b></td><td class="not-used"></td><td>Azione US</td><td>DOV.csv</td><td>S1</td></tr>
+<tr><td><b>DOW</b></td><td class="not-used"></td><td>Azione US</td><td>DOW.csv</td><td>S1</td></tr>
+<tr><td><b>DPZ</b></td><td class="not-used"></td><td>Azione US</td><td>DPZ.csv</td><td>S1</td></tr>
+<tr><td><b>DRI</b></td><td class="not-used"></td><td>Azione US</td><td>DRI.csv</td><td>S1</td></tr>
+<tr><td><b>DTE</b></td><td class="not-used"></td><td>Azione US</td><td>DTE.csv</td><td>S1</td></tr>
+<tr><td><b>DUK</b></td><td class="not-used"></td><td>Azione US</td><td>DUK.csv</td><td>S1</td></tr>
+<tr><td><b>DVA</b></td><td class="not-used"></td><td>Azione US</td><td>DVA.csv</td><td>S1</td></tr>
+<tr><td><b>DVN</b></td><td class="not-used"></td><td>Azione US</td><td>DVN.csv</td><td>S1</td></tr>
+<tr><td><b>DXCM</b></td><td class="not-used"></td><td>Azione US</td><td>DXCM.csv</td><td>S1</td></tr>
+<tr><td><b>EA</b></td><td class="not-used"></td><td>Azione US</td><td>EA.csv</td><td>S1</td></tr>
+<tr><td><b>EBAY</b></td><td class="not-used"></td><td>Azione US</td><td>EBAY.csv</td><td>S1</td></tr>
+<tr><td><b>ECL</b></td><td class="not-used"></td><td>Azione US</td><td>ECL.csv</td><td>S1</td></tr>
+<tr><td><b>ED</b></td><td class="not-used"></td><td>Azione US</td><td>ED.csv</td><td>S1</td></tr>
+<tr><td><b>EFX</b></td><td class="not-used"></td><td>Azione US</td><td>EFX.csv</td><td>S1</td></tr>
+<tr><td><b>EG</b></td><td class="not-used"></td><td>Azione US</td><td>EG.csv</td><td>S1</td></tr>
+<tr><td><b>EIX</b></td><td class="not-used"></td><td>Azione US</td><td>EIX.csv</td><td>S1</td></tr>
+<tr><td><b>EL</b></td><td class="not-used"></td><td>Azione US</td><td>EL.csv</td><td>S1</td></tr>
+<tr><td><b>ELV</b></td><td class="not-used"></td><td>Azione US</td><td>ELV.csv</td><td>S1</td></tr>
+<tr><td><b>EME</b></td><td class="not-used"></td><td>Azione US</td><td>EME.csv</td><td>S1</td></tr>
+<tr><td><b>EMR</b></td><td class="not-used"></td><td>Azione US</td><td>EMR.csv</td><td>S1</td></tr>
+<tr><td><b>EOG</b></td><td class="not-used"></td><td>Azione US</td><td>EOG.csv</td><td>S1</td></tr>
+<tr><td><b>EPAM</b></td><td class="not-used"></td><td>Azione US</td><td>EPAM.csv</td><td>S1</td></tr>
+<tr><td><b>EQIX</b></td><td class="not-used"></td><td>Azione US</td><td>EQIX.csv</td><td>S1</td></tr>
+<tr><td><b>EQR</b></td><td class="not-used"></td><td>Azione US</td><td>EQR.csv</td><td>S1</td></tr>
+<tr><td><b>EQT</b></td><td class="not-used"></td><td>Azione US</td><td>EQT.csv</td><td>S1</td></tr>
+<tr><td><b>ERIE</b></td><td class="not-used"></td><td>Azione US</td><td>ERIE.csv</td><td>S1</td></tr>
+<tr><td><b>ES</b></td><td class="not-used"></td><td>Azione US</td><td>ES.csv</td><td>S1</td></tr>
+<tr><td><b>ESS</b></td><td class="not-used"></td><td>Azione US</td><td>ESS.csv</td><td>S1</td></tr>
+<tr><td><b>ETN</b></td><td class="not-used"></td><td>Azione US</td><td>ETN.csv</td><td>S1</td></tr>
+<tr><td><b>ETR</b></td><td class="not-used"></td><td>Azione US</td><td>ETR.csv</td><td>S1</td></tr>
+<tr><td><b>EVRG</b></td><td class="not-used"></td><td>Azione US</td><td>EVRG.csv</td><td>S1</td></tr>
+<tr><td><b>EW</b></td><td class="not-used"></td><td>Azione US</td><td>EW.csv</td><td>S1</td></tr>
+<tr><td><b>EXC</b></td><td class="not-used"></td><td>Azione US</td><td>EXC.csv</td><td>S1</td></tr>
+<tr><td><b>EXE</b></td><td class="not-used"></td><td>Azione US</td><td>EXE.csv</td><td>S1</td></tr>
+<tr><td><b>EXPD</b></td><td class="not-used"></td><td>Azione US</td><td>EXPD.csv</td><td>S1</td></tr>
+<tr><td><b>EXPE</b></td><td class="not-used"></td><td>Azione US</td><td>EXPE.csv</td><td>S1</td></tr>
+<tr><td><b>EXR</b></td><td class="not-used"></td><td>Azione US</td><td>EXR.csv</td><td>S1</td></tr>
+<tr><td><b>F</b></td><td class="not-used"></td><td>Azione US</td><td>F.csv</td><td>S1</td></tr>
+<tr><td><b>FANG</b></td><td class="not-used"></td><td>Azione US</td><td>FANG.csv</td><td>S1</td></tr>
+<tr><td><b>FAST</b></td><td class="not-used"></td><td>Azione US</td><td>FAST.csv</td><td>S1</td></tr>
+<tr><td><b>FCX</b></td><td class="not-used"></td><td>Azione US</td><td>FCX.csv</td><td>S1</td></tr>
+<tr><td><b>FDS</b></td><td class="not-used"></td><td>Azione US</td><td>FDS.csv</td><td>S1</td></tr>
+<tr><td><b>FDX</b></td><td class="not-used"></td><td>Azione US</td><td>FDX.csv</td><td>S1</td></tr>
+<tr><td><b>FE</b></td><td class="not-used"></td><td>Azione US</td><td>FE.csv</td><td>S1</td></tr>
+<tr><td><b>FFIV</b></td><td class="not-used"></td><td>Azione US</td><td>FFIV.csv</td><td>S1</td></tr>
+<tr><td><b>FICO</b></td><td class="not-used"></td><td>Azione US</td><td>FICO.csv</td><td>S1</td></tr>
+<tr><td><b>FIS</b></td><td class="not-used"></td><td>Azione US</td><td>FIS.csv</td><td>S1</td></tr>
+<tr><td><b>FISV</b></td><td class="not-used"></td><td>Azione US</td><td>FISV.csv</td><td>S1</td></tr>
+<tr><td><b>FITB</b></td><td class="not-used"></td><td>Azione US</td><td>FITB.csv</td><td>S1</td></tr>
+<tr><td><b>FIX</b></td><td class="not-used"></td><td>Azione US</td><td>FIX.csv</td><td>S1</td></tr>
+<tr><td><b>FOX</b></td><td class="not-used"></td><td>Azione US</td><td>FOX.csv</td><td>S1</td></tr>
+<tr><td><b>FOXA</b></td><td class="not-used"></td><td>Azione US</td><td>FOXA.csv</td><td>S1</td></tr>
+<tr><td><b>FRT</b></td><td class="not-used"></td><td>Azione US</td><td>FRT.csv</td><td>S1</td></tr>
+<tr><td><b>FSLR</b></td><td class="not-used"></td><td>Azione US</td><td>FSLR.csv</td><td>S1</td></tr>
+<tr><td><b>FTNT</b></td><td class="not-used"></td><td>Azione US</td><td>FTNT.csv</td><td>S1</td></tr>
+<tr><td><b>FTV</b></td><td class="not-used"></td><td>Azione US</td><td>FTV.csv</td><td>S1</td></tr>
+<tr><td><b>GD</b></td><td class="not-used"></td><td>Azione US</td><td>GD.csv</td><td>S1</td></tr>
+<tr><td><b>GDDY</b></td><td class="not-used"></td><td>Azione US</td><td>GDDY.csv</td><td>S1</td></tr>
+<tr><td><b>GE</b></td><td class="not-used"></td><td>Azione US</td><td>GE.csv</td><td>S1</td></tr>
+<tr><td><b>GEHC</b></td><td class="not-used"></td><td>Azione US</td><td>GEHC.csv</td><td>S1</td></tr>
+<tr><td><b>GEN</b></td><td class="not-used"></td><td>Azione US</td><td>GEN.csv</td><td>S1</td></tr>
+<tr><td><b>GEV</b></td><td class="not-used"></td><td>Azione US</td><td>GEV.csv</td><td>S1</td></tr>
+<tr><td><b>GILD</b></td><td class="not-used"></td><td>Azione US</td><td>GILD.csv</td><td>S1</td></tr>
+<tr><td><b>GIS</b></td><td class="not-used"></td><td>Azione US</td><td>GIS.csv</td><td>S1</td></tr>
+<tr><td><b>GL</b></td><td class="not-used"></td><td>Azione US</td><td>GL.csv</td><td>S1</td></tr>
+<tr><td><b>GLW</b></td><td class="not-used"></td><td>Azione US</td><td>GLW.csv</td><td>S1</td></tr>
+<tr><td><b>GM</b></td><td class="not-used"></td><td>Azione US</td><td>GM.csv</td><td>S1</td></tr>
+<tr><td><b>GNRC</b></td><td class="not-used"></td><td>Azione US</td><td>GNRC.csv</td><td>S1</td></tr>
+<tr><td><b>GOOG</b></td><td class="not-used"></td><td>Azione US</td><td>GOOG.csv</td><td>S1</td></tr>
+<tr><td><b>GOOGL</b></td><td class="not-used"></td><td>Azione US</td><td>GOOGL.csv</td><td>S1</td></tr>
+<tr><td><b>GPC</b></td><td class="not-used"></td><td>Azione US</td><td>GPC.csv</td><td>S1</td></tr>
+<tr><td><b>GPN</b></td><td class="not-used"></td><td>Azione US</td><td>GPN.csv</td><td>S1</td></tr>
+<tr><td><b>GRMN</b></td><td class="not-used"></td><td>Azione US</td><td>GRMN.csv</td><td>S1</td></tr>
+<tr><td><b>GS</b></td><td class="not-used"></td><td>Azione US</td><td>GS.csv</td><td>S1</td></tr>
+<tr><td><b>GWW</b></td><td class="not-used"></td><td>Azione US</td><td>GWW.csv</td><td>S1</td></tr>
+<tr><td><b>HAL</b></td><td class="not-used"></td><td>Azione US</td><td>HAL.csv</td><td>S1</td></tr>
+<tr><td><b>HAS</b></td><td class="not-used"></td><td>Azione US</td><td>HAS.csv</td><td>S1</td></tr>
+<tr><td><b>HBAN</b></td><td class="not-used"></td><td>Azione US</td><td>HBAN.csv</td><td>S1</td></tr>
+<tr><td><b>HCA</b></td><td class="not-used"></td><td>Azione US</td><td>HCA.csv</td><td>S1</td></tr>
+<tr><td><b>HD</b></td><td class="not-used"></td><td>Azione US</td><td>HD.csv</td><td>S1</td></tr>
+<tr><td><b>HIG</b></td><td class="not-used"></td><td>Azione US</td><td>HIG.csv</td><td>S1</td></tr>
+<tr><td><b>HII</b></td><td class="not-used"></td><td>Azione US</td><td>HII.csv</td><td>S1</td></tr>
+<tr><td><b>HLT</b></td><td class="not-used"></td><td>Azione US</td><td>HLT.csv</td><td>S1</td></tr>
+<tr><td><b>HON</b></td><td class="not-used"></td><td>Azione US</td><td>HON.csv</td><td>S1</td></tr>
+<tr><td><b>HOOD</b></td><td class="not-used"></td><td>Azione US</td><td>HOOD.csv</td><td>S1</td></tr>
+<tr><td><b>HPE</b></td><td class="not-used"></td><td>Azione US</td><td>HPE.csv</td><td>S1</td></tr>
+<tr><td><b>HPQ</b></td><td class="not-used"></td><td>Azione US</td><td>HPQ.csv</td><td>S1</td></tr>
+<tr><td><b>HRL</b></td><td class="not-used"></td><td>Azione US</td><td>HRL.csv</td><td>S1</td></tr>
+<tr><td><b>HSIC</b></td><td class="not-used"></td><td>Azione US</td><td>HSIC.csv</td><td>S1</td></tr>
+<tr><td><b>HST</b></td><td class="not-used"></td><td>Azione US</td><td>HST.csv</td><td>S1</td></tr>
+<tr><td><b>HSY</b></td><td class="not-used"></td><td>Azione US</td><td>HSY.csv</td><td>S1</td></tr>
+<tr><td><b>HUBB</b></td><td class="not-used"></td><td>Azione US</td><td>HUBB.csv</td><td>S1</td></tr>
+<tr><td><b>HUM</b></td><td class="not-used"></td><td>Azione US</td><td>HUM.csv</td><td>S1</td></tr>
+<tr><td><b>HWM</b></td><td class="not-used"></td><td>Azione US</td><td>HWM.csv</td><td>S1</td></tr>
+<tr><td><b>IBKR</b></td><td class="not-used"></td><td>Azione US</td><td>IBKR.csv</td><td>S1</td></tr>
+<tr><td><b>IBM</b></td><td class="not-used"></td><td>Azione US</td><td>IBM.csv</td><td>S1</td></tr>
+<tr><td><b>ICE</b></td><td class="not-used"></td><td>Azione US</td><td>ICE.csv</td><td>S1</td></tr>
+<tr><td><b>IDXX</b></td><td class="not-used"></td><td>Azione US</td><td>IDXX.csv</td><td>S1</td></tr>
+<tr><td><b>IEX</b></td><td class="not-used"></td><td>Azione US</td><td>IEX.csv</td><td>S1</td></tr>
+<tr><td><b>IFF</b></td><td class="not-used"></td><td>Azione US</td><td>IFF.csv</td><td>S1</td></tr>
+<tr><td><b>INCY</b></td><td class="not-used"></td><td>Azione US</td><td>INCY.csv</td><td>S1</td></tr>
+<tr><td><b>INTC</b></td><td class="not-used"></td><td>Azione US</td><td>INTC.csv</td><td>S1</td></tr>
+<tr><td><b>INTU</b></td><td class="not-used"></td><td>Azione US</td><td>INTU.csv</td><td>S1</td></tr>
+<tr><td><b>INVH</b></td><td class="not-used"></td><td>Azione US</td><td>INVH.csv</td><td>S1</td></tr>
+<tr><td><b>IP</b></td><td class="not-used"></td><td>Azione US</td><td>IP.csv</td><td>S1</td></tr>
+<tr><td><b>IQV</b></td><td class="not-used"></td><td>Azione US</td><td>IQV.csv</td><td>S1</td></tr>
+<tr><td><b>IR</b></td><td class="not-used"></td><td>Azione US</td><td>IR.csv</td><td>S1</td></tr>
+<tr><td><b>IRM</b></td><td class="not-used"></td><td>Azione US</td><td>IRM.csv</td><td>S1</td></tr>
+<tr><td><b>ISRG</b></td><td class="not-used"></td><td>Azione US</td><td>ISRG.csv</td><td>S1</td></tr>
+<tr><td><b>IT</b></td><td class="not-used"></td><td>Azione US</td><td>IT.csv</td><td>S1</td></tr>
+<tr><td><b>ITW</b></td><td class="not-used"></td><td>Azione US</td><td>ITW.csv</td><td>S1</td></tr>
+<tr><td><b>IVZ</b></td><td class="not-used"></td><td>Azione US</td><td>IVZ.csv</td><td>S1</td></tr>
+<tr><td><b>J</b></td><td class="not-used"></td><td>Azione US</td><td>J.csv</td><td>S1</td></tr>
+<tr><td><b>JBHT</b></td><td class="not-used"></td><td>Azione US</td><td>JBHT.csv</td><td>S1</td></tr>
+<tr><td><b>JBL</b></td><td class="not-used"></td><td>Azione US</td><td>JBL.csv</td><td>S1</td></tr>
+<tr><td><b>JCI</b></td><td class="not-used"></td><td>Azione US</td><td>JCI.csv</td><td>S1</td></tr>
+<tr><td><b>JKHY</b></td><td class="not-used"></td><td>Azione US</td><td>JKHY.csv</td><td>S1</td></tr>
+<tr><td><b>JNJ</b></td><td class="not-used"></td><td>Azione US</td><td>JNJ.csv</td><td>S1</td></tr>
+<tr><td><b>JPM</b></td><td class="not-used"></td><td>Azione US</td><td>JPM.csv</td><td>S1</td></tr>
+<tr><td><b>KDP</b></td><td class="not-used"></td><td>Azione US</td><td>KDP.csv</td><td>S1</td></tr>
+<tr><td><b>KEY</b></td><td class="not-used"></td><td>Azione US</td><td>KEY.csv</td><td>S1</td></tr>
+<tr><td><b>KEYS</b></td><td class="not-used"></td><td>Azione US</td><td>KEYS.csv</td><td>S1</td></tr>
+<tr><td><b>KHC</b></td><td class="not-used"></td><td>Azione US</td><td>KHC.csv</td><td>S1</td></tr>
+<tr><td><b>KIM</b></td><td class="not-used"></td><td>Azione US</td><td>KIM.csv</td><td>S1</td></tr>
+<tr><td><b>KKR</b></td><td class="not-used"></td><td>Azione US</td><td>KKR.csv</td><td>S1</td></tr>
+<tr><td><b>KLAC</b></td><td class="not-used"></td><td>Azione US</td><td>KLAC.csv</td><td>S1</td></tr>
+<tr><td><b>KMB</b></td><td class="not-used"></td><td>Azione US</td><td>KMB.csv</td><td>S1</td></tr>
+<tr><td><b>KMI</b></td><td class="not-used"></td><td>Azione US</td><td>KMI.csv</td><td>S1</td></tr>
+<tr><td><b>KO</b></td><td class="not-used"></td><td>Azione US</td><td>KO.csv</td><td>S1</td></tr>
+<tr><td><b>KR</b></td><td class="not-used"></td><td>Azione US</td><td>KR.csv</td><td>S1</td></tr>
+<tr><td><b>KVUE</b></td><td class="not-used"></td><td>Azione US</td><td>KVUE.csv</td><td>S1</td></tr>
+<tr><td><b>L</b></td><td class="not-used"></td><td>Azione US</td><td>L.csv</td><td>S1</td></tr>
+<tr><td><b>LDOS</b></td><td class="not-used"></td><td>Azione US</td><td>LDOS.csv</td><td>S1</td></tr>
+<tr><td><b>LEN</b></td><td class="not-used"></td><td>Azione US</td><td>LEN.csv</td><td>S1</td></tr>
+<tr><td><b>LH</b></td><td class="not-used"></td><td>Azione US</td><td>LH.csv</td><td>S1</td></tr>
+<tr><td><b>LHX</b></td><td class="not-used"></td><td>Azione US</td><td>LHX.csv</td><td>S1</td></tr>
+<tr><td><b>LII</b></td><td class="not-used"></td><td>Azione US</td><td>LII.csv</td><td>S1</td></tr>
+<tr><td><b>LIN</b></td><td class="not-used"></td><td>Azione US</td><td>LIN.csv</td><td>S1</td></tr>
+<tr><td><b>LITE</b></td><td class="not-used"></td><td>Azione US</td><td>LITE.csv</td><td>S1</td></tr>
+<tr><td><b>LLY</b></td><td class="not-used"></td><td>Azione US</td><td>LLY.csv</td><td>S1</td></tr>
+<tr><td><b>LMT</b></td><td class="not-used"></td><td>Azione US</td><td>LMT.csv</td><td>S1</td></tr>
+<tr><td><b>LNT</b></td><td class="not-used"></td><td>Azione US</td><td>LNT.csv</td><td>S1</td></tr>
+<tr><td><b>LOW</b></td><td class="not-used"></td><td>Azione US</td><td>LOW.csv</td><td>S1</td></tr>
+<tr><td><b>LRCX</b></td><td class="not-used"></td><td>Azione US</td><td>LRCX.csv</td><td>S1</td></tr>
+<tr><td><b>LULU</b></td><td class="not-used"></td><td>Azione US</td><td>LULU.csv</td><td>S1</td></tr>
+<tr><td><b>LUV</b></td><td class="not-used"></td><td>Azione US</td><td>LUV.csv</td><td>S1</td></tr>
+<tr><td><b>LVS</b></td><td class="not-used"></td><td>Azione US</td><td>LVS.csv</td><td>S1</td></tr>
+<tr><td><b>LYB</b></td><td class="not-used"></td><td>Azione US</td><td>LYB.csv</td><td>S1</td></tr>
+<tr><td><b>LYV</b></td><td class="not-used"></td><td>Azione US</td><td>LYV.csv</td><td>S1</td></tr>
+<tr><td><b>MA</b></td><td class="not-used"></td><td>Azione US</td><td>MA.csv</td><td>S1</td></tr>
+<tr><td><b>MAA</b></td><td class="not-used"></td><td>Azione US</td><td>MAA.csv</td><td>S1</td></tr>
+<tr><td><b>MAR</b></td><td class="not-used"></td><td>Azione US</td><td>MAR.csv</td><td>S1</td></tr>
+<tr><td><b>MAS</b></td><td class="not-used"></td><td>Azione US</td><td>MAS.csv</td><td>S1</td></tr>
+<tr><td><b>MCD</b></td><td class="not-used"></td><td>Azione US</td><td>MCD.csv</td><td>S1</td></tr>
+<tr><td><b>MCHP</b></td><td class="not-used"></td><td>Azione US</td><td>MCHP.csv</td><td>S1</td></tr>
+<tr><td><b>MCK</b></td><td class="not-used"></td><td>Azione US</td><td>MCK.csv</td><td>S1</td></tr>
+<tr><td><b>MCO</b></td><td class="not-used"></td><td>Azione US</td><td>MCO.csv</td><td>S1</td></tr>
+<tr><td><b>MDLZ</b></td><td class="not-used"></td><td>Azione US</td><td>MDLZ.csv</td><td>S1</td></tr>
+<tr><td><b>MDT</b></td><td class="not-used"></td><td>Azione US</td><td>MDT.csv</td><td>S1</td></tr>
+<tr><td><b>MET</b></td><td class="not-used"></td><td>Azione US</td><td>MET.csv</td><td>S1</td></tr>
+<tr><td><b>META</b></td><td class="not-used"></td><td>Azione US</td><td>META.csv</td><td>S1</td></tr>
+<tr><td><b>MGM</b></td><td class="not-used"></td><td>Azione US</td><td>MGM.csv</td><td>S1</td></tr>
+<tr><td><b>MKC</b></td><td class="not-used"></td><td>Azione US</td><td>MKC.csv</td><td>S1</td></tr>
+<tr><td><b>MLM</b></td><td class="not-used"></td><td>Azione US</td><td>MLM.csv</td><td>S1</td></tr>
+<tr><td><b>MMM</b></td><td class="not-used"></td><td>Azione US</td><td>MMM.csv</td><td>S1</td></tr>
+<tr><td><b>MNST</b></td><td class="not-used"></td><td>Azione US</td><td>MNST.csv</td><td>S1</td></tr>
+<tr><td><b>MO</b></td><td class="not-used"></td><td>Azione US</td><td>MO.csv</td><td>S1</td></tr>
+<tr><td><b>MOS</b></td><td class="not-used"></td><td>Azione US</td><td>MOS.csv</td><td>S1</td></tr>
+<tr><td><b>MPC</b></td><td class="not-used"></td><td>Azione US</td><td>MPC.csv</td><td>S1</td></tr>
+<tr><td><b>MPWR</b></td><td class="not-used"></td><td>Azione US</td><td>MPWR.csv</td><td>S1</td></tr>
+<tr><td><b>MRK</b></td><td class="not-used"></td><td>Azione US</td><td>MRK.csv</td><td>S1</td></tr>
+<tr><td><b>MRNA</b></td><td class="not-used"></td><td>Azione US</td><td>MRNA.csv</td><td>S1</td></tr>
+<tr><td><b>MRSH</b></td><td class="not-used"></td><td>Azione US</td><td>MRSH.csv</td><td>S1</td></tr>
+<tr><td><b>MS</b></td><td class="not-used"></td><td>Azione US</td><td>MS.csv</td><td>S1</td></tr>
+<tr><td><b>MSCI</b></td><td class="not-used"></td><td>Azione US</td><td>MSCI.csv</td><td>S1</td></tr>
+<tr><td><b>MSFT</b></td><td class="not-used"></td><td>Azione US</td><td>MSFT.csv</td><td>S1</td></tr>
+<tr><td><b>MSI</b></td><td class="not-used"></td><td>Azione US</td><td>MSI.csv</td><td>S1</td></tr>
+<tr><td><b>MTB</b></td><td class="not-used"></td><td>Azione US</td><td>MTB.csv</td><td>S1</td></tr>
+<tr><td><b>MTD</b></td><td class="not-used"></td><td>Azione US</td><td>MTD.csv</td><td>S1</td></tr>
+<tr><td><b>MU</b></td><td class="not-used"></td><td>Azione US</td><td>MU.csv</td><td>S1</td></tr>
+<tr><td><b>NCLH</b></td><td class="not-used"></td><td>Azione US</td><td>NCLH.csv</td><td>S1</td></tr>
+<tr><td><b>NDAQ</b></td><td class="not-used"></td><td>Azione US</td><td>NDAQ.csv</td><td>S1</td></tr>
+<tr><td><b>NDSN</b></td><td class="not-used"></td><td>Azione US</td><td>NDSN.csv</td><td>S1</td></tr>
+<tr><td><b>NEE</b></td><td class="not-used"></td><td>Azione US</td><td>NEE.csv</td><td>S1</td></tr>
+<tr><td><b>NEM</b></td><td class="not-used"></td><td>Azione US</td><td>NEM.csv</td><td>S1</td></tr>
+<tr><td><b>NFLX</b></td><td class="not-used"></td><td>Azione US</td><td>NFLX.csv</td><td>S1</td></tr>
+<tr><td><b>NI</b></td><td class="not-used"></td><td>Azione US</td><td>NI.csv</td><td>S1</td></tr>
+<tr><td><b>NKE</b></td><td class="not-used"></td><td>Azione US</td><td>NKE.csv</td><td>S1</td></tr>
+<tr><td><b>NOC</b></td><td class="not-used"></td><td>Azione US</td><td>NOC.csv</td><td>S1</td></tr>
+<tr><td><b>NOW</b></td><td class="not-used"></td><td>Azione US</td><td>NOW.csv</td><td>S1</td></tr>
+<tr><td><b>NRG</b></td><td class="not-used"></td><td>Azione US</td><td>NRG.csv</td><td>S1</td></tr>
+<tr><td><b>NSC</b></td><td class="not-used"></td><td>Azione US</td><td>NSC.csv</td><td>S1</td></tr>
+<tr><td><b>NTAP</b></td><td class="not-used"></td><td>Azione US</td><td>NTAP.csv</td><td>S1</td></tr>
+<tr><td><b>NTRS</b></td><td class="not-used"></td><td>Azione US</td><td>NTRS.csv</td><td>S1</td></tr>
+<tr><td><b>NUE</b></td><td class="not-used"></td><td>Azione US</td><td>NUE.csv</td><td>S1</td></tr>
+<tr><td><b>NVDA</b></td><td class="not-used"></td><td>Azione US</td><td>NVDA.csv</td><td>S1</td></tr>
+<tr><td><b>NVR</b></td><td class="not-used"></td><td>Azione US</td><td>NVR.csv</td><td>S1</td></tr>
+<tr><td><b>NWS</b></td><td class="not-used"></td><td>Azione US</td><td>NWS.csv</td><td>S1</td></tr>
+<tr><td><b>NWSA</b></td><td class="not-used"></td><td>Azione US</td><td>NWSA.csv</td><td>S1</td></tr>
+<tr><td><b>NXPI</b></td><td class="not-used"></td><td>Azione US</td><td>NXPI.csv</td><td>S1</td></tr>
+<tr><td><b>O</b></td><td class="not-used"></td><td>Azione US</td><td>O.csv</td><td>S1</td></tr>
+<tr><td><b>ODFL</b></td><td class="not-used"></td><td>Azione US</td><td>ODFL.csv</td><td>S1</td></tr>
+<tr><td><b>OKE</b></td><td class="not-used"></td><td>Azione US</td><td>OKE.csv</td><td>S1</td></tr>
+<tr><td><b>OMC</b></td><td class="not-used"></td><td>Azione US</td><td>OMC.csv</td><td>S1</td></tr>
+<tr><td><b>ON</b></td><td class="not-used"></td><td>Azione US</td><td>ON.csv</td><td>S1</td></tr>
+<tr><td><b>ORCL</b></td><td class="not-used"></td><td>Azione US</td><td>ORCL.csv</td><td>S1</td></tr>
+<tr><td><b>ORLY</b></td><td class="not-used"></td><td>Azione US</td><td>ORLY.csv</td><td>S1</td></tr>
+<tr><td><b>OTIS</b></td><td class="not-used"></td><td>Azione US</td><td>OTIS.csv</td><td>S1</td></tr>
+<tr><td><b>OXY</b></td><td class="not-used"></td><td>Azione US</td><td>OXY.csv</td><td>S1</td></tr>
+<tr><td><b>PANW</b></td><td class="not-used"></td><td>Azione US</td><td>PANW.csv</td><td>S1</td></tr>
+<tr><td><b>PAYX</b></td><td class="not-used"></td><td>Azione US</td><td>PAYX.csv</td><td>S1</td></tr>
+<tr><td><b>PCAR</b></td><td class="not-used"></td><td>Azione US</td><td>PCAR.csv</td><td>S1</td></tr>
+<tr><td><b>PCG</b></td><td class="not-used"></td><td>Azione US</td><td>PCG.csv</td><td>S1</td></tr>
+<tr><td><b>PEG</b></td><td class="not-used"></td><td>Azione US</td><td>PEG.csv</td><td>S1</td></tr>
+<tr><td><b>PEP</b></td><td class="not-used"></td><td>Azione US</td><td>PEP.csv</td><td>S1</td></tr>
+<tr><td><b>PFE</b></td><td class="not-used"></td><td>Azione US</td><td>PFE.csv</td><td>S1</td></tr>
+<tr><td><b>PFG</b></td><td class="not-used"></td><td>Azione US</td><td>PFG.csv</td><td>S1</td></tr>
+<tr><td><b>PG</b></td><td class="not-used"></td><td>Azione US</td><td>PG.csv</td><td>S1</td></tr>
+<tr><td><b>PGR</b></td><td class="not-used"></td><td>Azione US</td><td>PGR.csv</td><td>S1</td></tr>
+<tr><td><b>PH</b></td><td class="not-used"></td><td>Azione US</td><td>PH.csv</td><td>S1</td></tr>
+<tr><td><b>PHM</b></td><td class="not-used"></td><td>Azione US</td><td>PHM.csv</td><td>S1</td></tr>
+<tr><td><b>PKG</b></td><td class="not-used"></td><td>Azione US</td><td>PKG.csv</td><td>S1</td></tr>
+<tr><td><b>PLD</b></td><td class="not-used"></td><td>Azione US</td><td>PLD.csv</td><td>S1</td></tr>
+<tr><td><b>PLTR</b></td><td class="not-used"></td><td>Azione US</td><td>PLTR.csv</td><td>S1</td></tr>
+<tr><td><b>PM</b></td><td class="not-used"></td><td>Azione US</td><td>PM.csv</td><td>S1</td></tr>
+<tr><td><b>PNC</b></td><td class="not-used"></td><td>Azione US</td><td>PNC.csv</td><td>S1</td></tr>
+<tr><td><b>PNR</b></td><td class="not-used"></td><td>Azione US</td><td>PNR.csv</td><td>S1</td></tr>
+<tr><td><b>PNW</b></td><td class="not-used"></td><td>Azione US</td><td>PNW.csv</td><td>S1</td></tr>
+<tr><td><b>PODD</b></td><td class="not-used"></td><td>Azione US</td><td>PODD.csv</td><td>S1</td></tr>
+<tr><td><b>POOL</b></td><td class="not-used"></td><td>Azione US</td><td>POOL.csv</td><td>S1</td></tr>
+<tr><td><b>PPG</b></td><td class="not-used"></td><td>Azione US</td><td>PPG.csv</td><td>S1</td></tr>
+<tr><td><b>PPL</b></td><td class="not-used"></td><td>Azione US</td><td>PPL.csv</td><td>S1</td></tr>
+<tr><td><b>PRU</b></td><td class="not-used"></td><td>Azione US</td><td>PRU.csv</td><td>S1</td></tr>
+<tr><td><b>PSA</b></td><td class="not-used"></td><td>Azione US</td><td>PSA.csv</td><td>S1</td></tr>
+<tr><td><b>PSKY</b></td><td class="not-used"></td><td>Azione US</td><td>PSKY.csv</td><td>S1</td></tr>
+<tr><td><b>PSX</b></td><td class="not-used"></td><td>Azione US</td><td>PSX.csv</td><td>S1</td></tr>
+<tr><td><b>PTC</b></td><td class="not-used"></td><td>Azione US</td><td>PTC.csv</td><td>S1</td></tr>
+<tr><td><b>PWR</b></td><td class="not-used"></td><td>Azione US</td><td>PWR.csv</td><td>S1</td></tr>
+<tr><td><b>PYPL</b></td><td class="not-used"></td><td>Azione US</td><td>PYPL.csv</td><td>S1</td></tr>
+<tr><td><b>Q</b></td><td class="not-used"></td><td>Azione US</td><td>Q.csv</td><td>S1</td></tr>
+<tr><td><b>QCOM</b></td><td class="not-used"></td><td>Azione US</td><td>QCOM.csv</td><td>S1</td></tr>
+<tr><td><b>RCL</b></td><td class="not-used"></td><td>Azione US</td><td>RCL.csv</td><td>S1</td></tr>
+<tr><td><b>REG</b></td><td class="not-used"></td><td>Azione US</td><td>REG.csv</td><td>S1</td></tr>
+<tr><td><b>REGN</b></td><td class="not-used"></td><td>Azione US</td><td>REGN.csv</td><td>S1</td></tr>
+<tr><td><b>RF</b></td><td class="not-used"></td><td>Azione US</td><td>RF.csv</td><td>S1</td></tr>
+<tr><td><b>RJF</b></td><td class="not-used"></td><td>Azione US</td><td>RJF.csv</td><td>S1</td></tr>
+<tr><td><b>RL</b></td><td class="not-used"></td><td>Azione US</td><td>RL.csv</td><td>S1</td></tr>
+<tr><td><b>RMD</b></td><td class="not-used"></td><td>Azione US</td><td>RMD.csv</td><td>S1</td></tr>
+<tr><td><b>ROK</b></td><td class="not-used"></td><td>Azione US</td><td>ROK.csv</td><td>S1</td></tr>
+<tr><td><b>ROL</b></td><td class="not-used"></td><td>Azione US</td><td>ROL.csv</td><td>S1</td></tr>
+<tr><td><b>ROP</b></td><td class="not-used"></td><td>Azione US</td><td>ROP.csv</td><td>S1</td></tr>
+<tr><td><b>ROST</b></td><td class="not-used"></td><td>Azione US</td><td>ROST.csv</td><td>S1</td></tr>
+<tr><td><b>RSG</b></td><td class="not-used"></td><td>Azione US</td><td>RSG.csv</td><td>S1</td></tr>
+<tr><td><b>RTX</b></td><td class="not-used"></td><td>Azione US</td><td>RTX.csv</td><td>S1</td></tr>
+<tr><td><b>RVTY</b></td><td class="not-used"></td><td>Azione US</td><td>RVTY.csv</td><td>S1</td></tr>
+<tr><td><b>SATS</b></td><td class="not-used"></td><td>Azione US</td><td>SATS.csv</td><td>S1</td></tr>
+<tr><td><b>SBAC</b></td><td class="not-used"></td><td>Azione US</td><td>SBAC.csv</td><td>S1</td></tr>
+<tr><td><b>SBUX</b></td><td class="not-used"></td><td>Azione US</td><td>SBUX.csv</td><td>S1</td></tr>
+<tr><td><b>SCHW</b></td><td class="not-used"></td><td>Azione US</td><td>SCHW.csv</td><td>S1</td></tr>
+<tr><td><b>SHW</b></td><td class="not-used"></td><td>Azione US</td><td>SHW.csv</td><td>S1</td></tr>
+<tr><td><b>SJM</b></td><td class="not-used"></td><td>Azione US</td><td>SJM.csv</td><td>S1</td></tr>
+<tr><td><b>SLB</b></td><td class="not-used"></td><td>Azione US</td><td>SLB.csv</td><td>S1</td></tr>
+<tr><td><b>SMCI</b></td><td class="not-used"></td><td>Azione US Semiconductors</td><td>SMCI.csv</td><td>S1</td></tr>
+<tr><td><b>SNA</b></td><td class="not-used"></td><td>Azione US</td><td>SNA.csv</td><td>S1</td></tr>
+<tr><td><b>SNDK</b></td><td class="not-used"></td><td>Azione US</td><td>SNDK.csv</td><td>S1</td></tr>
+<tr><td><b>SNPS</b></td><td class="not-used"></td><td>Azione US</td><td>SNPS.csv</td><td>S1</td></tr>
+<tr><td><b>SO</b></td><td class="not-used"></td><td>Azione US</td><td>SO.csv</td><td>S1</td></tr>
+<tr><td><b>SOLV</b></td><td class="not-used"></td><td>Azione US</td><td>SOLV.csv</td><td>S1</td></tr>
+<tr><td><b>SPG</b></td><td class="not-used"></td><td>Azione US</td><td>SPG.csv</td><td>S1</td></tr>
+<tr><td><b>SPGI</b></td><td class="not-used"></td><td>Azione US</td><td>SPGI.csv</td><td>S1</td></tr>
+<tr><td><b>SRE</b></td><td class="not-used"></td><td>Azione US</td><td>SRE.csv</td><td>S1</td></tr>
+<tr><td><b>STE</b></td><td class="not-used"></td><td>Azione US</td><td>STE.csv</td><td>S1</td></tr>
+<tr><td><b>STLD</b></td><td class="not-used"></td><td>Azione US</td><td>STLD.csv</td><td>S1</td></tr>
+<tr><td><b>STT</b></td><td class="not-used"></td><td>Azione US</td><td>STT.csv</td><td>S1</td></tr>
+<tr><td><b>STX</b></td><td class="not-used"></td><td>Azione US</td><td>STX.csv</td><td>S1</td></tr>
+<tr><td><b>STZ</b></td><td class="not-used"></td><td>Azione US</td><td>STZ.csv</td><td>S1</td></tr>
+<tr><td><b>SW</b></td><td class="not-used"></td><td>Azione US</td><td>SW.csv</td><td>S1</td></tr>
+<tr><td><b>SWK</b></td><td class="not-used"></td><td>Azione US</td><td>SWK.csv</td><td>S1</td></tr>
+<tr><td><b>SWKS</b></td><td class="not-used"></td><td>Azione US</td><td>SWKS.csv</td><td>S1</td></tr>
+<tr><td><b>SYF</b></td><td class="not-used"></td><td>Azione US</td><td>SYF.csv</td><td>S1</td></tr>
+<tr><td><b>SYK</b></td><td class="not-used"></td><td>Azione US</td><td>SYK.csv</td><td>S1</td></tr>
+<tr><td><b>SYY</b></td><td class="not-used"></td><td>Azione US</td><td>SYY.csv</td><td>S1</td></tr>
+<tr><td><b>T</b></td><td class="not-used"></td><td>Azione US</td><td>T.csv</td><td>S1</td></tr>
+<tr><td><b>TAP</b></td><td class="not-used"></td><td>Azione US</td><td>TAP.csv</td><td>S1</td></tr>
+<tr><td><b>TDG</b></td><td class="not-used"></td><td>Azione US</td><td>TDG.csv</td><td>S1</td></tr>
+<tr><td><b>TDY</b></td><td class="not-used"></td><td>Azione US</td><td>TDY.csv</td><td>S1</td></tr>
+<tr><td><b>TECH</b></td><td class="not-used"></td><td>Azione US</td><td>TECH.csv</td><td>S1</td></tr>
+<tr><td><b>TEL</b></td><td class="not-used"></td><td>Azione US</td><td>TEL.csv</td><td>S1</td></tr>
+<tr><td><b>TER</b></td><td class="not-used"></td><td>Azione US</td><td>TER.csv</td><td>S1</td></tr>
+<tr><td><b>TFC</b></td><td class="not-used"></td><td>Azione US</td><td>TFC.csv</td><td>S1</td></tr>
+<tr><td><b>TGT</b></td><td class="not-used"></td><td>Azione US</td><td>TGT.csv</td><td>S1</td></tr>
+<tr><td><b>TJX</b></td><td class="not-used"></td><td>Azione US</td><td>TJX.csv</td><td>S1</td></tr>
+<tr><td><b>TKO</b></td><td class="not-used"></td><td>Azione US</td><td>TKO.csv</td><td>S1</td></tr>
+<tr><td><b>TMO</b></td><td class="not-used"></td><td>Azione US</td><td>TMO.csv</td><td>S1</td></tr>
+<tr><td><b>TMUS</b></td><td class="not-used"></td><td>Azione US</td><td>TMUS.csv</td><td>S1</td></tr>
+<tr><td><b>TPL</b></td><td class="not-used"></td><td>Azione US</td><td>TPL.csv</td><td>S1</td></tr>
+<tr><td><b>TPR</b></td><td class="not-used"></td><td>Azione US</td><td>TPR.csv</td><td>S1</td></tr>
+<tr><td><b>TRGP</b></td><td class="not-used"></td><td>Azione US</td><td>TRGP.csv</td><td>S1</td></tr>
+<tr><td><b>TRMB</b></td><td class="not-used"></td><td>Azione US</td><td>TRMB.csv</td><td>S1</td></tr>
+<tr><td><b>TROW</b></td><td class="not-used"></td><td>Azione US</td><td>TROW.csv</td><td>S1</td></tr>
+<tr><td><b>TRV</b></td><td class="not-used"></td><td>Azione US</td><td>TRV.csv</td><td>S1</td></tr>
+<tr><td><b>TSCO</b></td><td class="not-used"></td><td>Azione US</td><td>TSCO.csv</td><td>S1</td></tr>
+<tr><td><b>TSLA</b></td><td class="not-used"></td><td>Azione US</td><td>TSLA.csv</td><td>S1</td></tr>
+<tr><td><b>TSN</b></td><td class="not-used"></td><td>Azione US</td><td>TSN.csv</td><td>S1</td></tr>
+<tr><td><b>TT</b></td><td class="not-used"></td><td>Azione US</td><td>TT.csv</td><td>S1</td></tr>
+<tr><td><b>TTD</b></td><td class="not-used"></td><td>Azione US</td><td>TTD.csv</td><td>S1</td></tr>
+<tr><td><b>TTWO</b></td><td class="not-used"></td><td>Azione US</td><td>TTWO.csv</td><td>S1</td></tr>
+<tr><td><b>TXN</b></td><td class="not-used"></td><td>Azione US</td><td>TXN.csv</td><td>S1</td></tr>
+<tr><td><b>TXT</b></td><td class="not-used"></td><td>Azione US</td><td>TXT.csv</td><td>S1</td></tr>
+<tr><td><b>TYL</b></td><td class="not-used"></td><td>Azione US</td><td>TYL.csv</td><td>S1</td></tr>
+<tr><td><b>UAL</b></td><td class="not-used"></td><td>Azione US</td><td>UAL.csv</td><td>S1</td></tr>
+<tr><td><b>UBER</b></td><td class="not-used"></td><td>Azione US</td><td>UBER.csv</td><td>S1</td></tr>
+<tr><td><b>UDR</b></td><td class="not-used"></td><td>Azione US</td><td>UDR.csv</td><td>S1</td></tr>
+<tr><td><b>UHS</b></td><td class="not-used"></td><td>Azione US</td><td>UHS.csv</td><td>S1</td></tr>
+<tr><td><b>ULTA</b></td><td class="not-used"></td><td>Azione US</td><td>ULTA.csv</td><td>S1</td></tr>
+<tr><td><b>UNH</b></td><td class="not-used"></td><td>Azione US</td><td>UNH.csv</td><td>S1</td></tr>
+<tr><td><b>UNP</b></td><td class="not-used"></td><td>Azione US</td><td>UNP.csv</td><td>S1</td></tr>
+<tr><td><b>UPS</b></td><td class="not-used"></td><td>Azione US</td><td>UPS.csv</td><td>S1</td></tr>
+<tr><td><b>URI</b></td><td class="not-used"></td><td>Azione US</td><td>URI.csv</td><td>S1</td></tr>
+<tr><td><b>USB</b></td><td class="not-used"></td><td>Azione US</td><td>USB.csv</td><td>S1</td></tr>
+<tr><td><b>V</b></td><td class="not-used"></td><td>Azione US</td><td>V.csv</td><td>S1</td></tr>
+<tr><td><b>VICI</b></td><td class="not-used"></td><td>Azione US</td><td>VICI.csv</td><td>S1</td></tr>
+<tr><td><b>VIX</b></td><td class="not-used"></td><td>Input volatilita</td><td>VIX.csv</td><td>input</td></tr>
+<tr><td><b>VLO</b></td><td class="not-used"></td><td>Azione US</td><td>VLO.csv</td><td>S1</td></tr>
+<tr><td><b>VLTO</b></td><td class="not-used"></td><td>Azione US</td><td>VLTO.csv</td><td>S1</td></tr>
+<tr><td><b>VMC</b></td><td class="not-used"></td><td>Azione US</td><td>VMC.csv</td><td>S1</td></tr>
+<tr><td><b>VRSK</b></td><td class="not-used"></td><td>Azione US</td><td>VRSK.csv</td><td>S1</td></tr>
+<tr><td><b>VRSN</b></td><td class="not-used"></td><td>Azione US</td><td>VRSN.csv</td><td>S1</td></tr>
+<tr><td><b>VRT</b></td><td class="not-used"></td><td>Azione US</td><td>VRT.csv</td><td>S1</td></tr>
+<tr><td><b>VRTX</b></td><td class="not-used"></td><td>Azione US</td><td>VRTX.csv</td><td>S1</td></tr>
+<tr><td><b>VST</b></td><td class="not-used"></td><td>Azione US</td><td>VST.csv</td><td>S1</td></tr>
+<tr><td><b>VTR</b></td><td class="not-used"></td><td>Azione US</td><td>VTR.csv</td><td>S1</td></tr>
+<tr><td><b>VTRS</b></td><td class="not-used"></td><td>Azione US</td><td>VTRS.csv</td><td>S1</td></tr>
+<tr><td><b>VZ</b></td><td class="not-used"></td><td>Azione US</td><td>VZ.csv</td><td>S1</td></tr>
+<tr><td><b>WAB</b></td><td class="not-used"></td><td>Azione US</td><td>WAB.csv</td><td>S1</td></tr>
+<tr><td><b>WAT</b></td><td class="not-used"></td><td>Azione US</td><td>WAT.csv</td><td>S1</td></tr>
+<tr><td><b>WBD</b></td><td class="not-used"></td><td>Azione US</td><td>WBD.csv</td><td>S1</td></tr>
+<tr><td><b>WDAY</b></td><td class="not-used"></td><td>Azione US</td><td>WDAY.csv</td><td>S1</td></tr>
+<tr><td><b>WDC</b></td><td class="not-used"></td><td>Azione US</td><td>WDC.csv</td><td>S1</td></tr>
+<tr><td><b>WEC</b></td><td class="not-used"></td><td>Azione US</td><td>WEC.csv</td><td>S1</td></tr>
+<tr><td><b>WELL</b></td><td class="not-used"></td><td>Azione US</td><td>WELL.csv</td><td>S1</td></tr>
+<tr><td><b>WFC</b></td><td class="not-used"></td><td>Azione US</td><td>WFC.csv</td><td>S1</td></tr>
+<tr><td><b>WM</b></td><td class="not-used"></td><td>Azione US</td><td>WM.csv</td><td>S1</td></tr>
+<tr><td><b>WMB</b></td><td class="not-used"></td><td>Azione US</td><td>WMB.csv</td><td>S1</td></tr>
+<tr><td><b>WMT</b></td><td class="not-used"></td><td>Azione US</td><td>WMT.csv</td><td>S1</td></tr>
+<tr><td><b>WRB</b></td><td class="not-used"></td><td>Azione US</td><td>WRB.csv</td><td>S1</td></tr>
+<tr><td><b>WSM</b></td><td class="not-used"></td><td>Azione US</td><td>WSM.csv</td><td>S1</td></tr>
+<tr><td><b>WST</b></td><td class="not-used"></td><td>Azione US</td><td>WST.csv</td><td>S1</td></tr>
+<tr><td><b>WTW</b></td><td class="not-used"></td><td>Azione US</td><td>WTW.csv</td><td>S1</td></tr>
+<tr><td><b>WY</b></td><td class="not-used"></td><td>Azione US</td><td>WY.csv</td><td>S1</td></tr>
+<tr><td><b>WYNN</b></td><td class="not-used"></td><td>Azione US</td><td>WYNN.csv</td><td>S1</td></tr>
+<tr><td><b>XEL</b></td><td class="not-used"></td><td>Azione US</td><td>XEL.csv</td><td>S1</td></tr>
+<tr><td><b>XOM</b></td><td class="not-used"></td><td>Azione US</td><td>XOM.csv</td><td>S1</td></tr>
+<tr><td><b>XYL</b></td><td class="not-used"></td><td>Azione US</td><td>XYL.csv</td><td>S1</td></tr>
+<tr><td><b>XYZ</b></td><td class="not-used"></td><td>Azione US</td><td>XYZ.csv</td><td>S1</td></tr>
+<tr><td><b>YUM</b></td><td class="not-used"></td><td>Azione US</td><td>YUM.csv</td><td>S1</td></tr>
+<tr><td><b>ZBH</b></td><td class="not-used"></td><td>Azione US</td><td>ZBH.csv</td><td>S1</td></tr>
+<tr><td><b>ZBRA</b></td><td class="not-used"></td><td>Azione US</td><td>ZBRA.csv</td><td>S1</td></tr>
+<tr><td><b>ZTS</b></td><td class="not-used"></td><td>Azione US</td><td>ZTS.csv</td><td>S1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script>
+let sortDir = 1;
+function filterRows() {
+  const q = document.getElementById('q').value.toLowerCase();
+  document.querySelectorAll('#ticker-table tbody tr').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+function sortTable(idx) {
+  const tbody = document.querySelector('#ticker-table tbody');
+  const rows = Array.from(tbody.rows);
+  rows.sort((a, b) => sortDir * a.cells[idx].textContent.localeCompare(b.cells[idx].textContent, 'it', { numeric:true }));
+  sortDir *= -1;
+  rows.forEach(row => tbody.appendChild(row));
+}
+  </script>
+</body>
+</html>

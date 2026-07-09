@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analisi globale strategie e next steps</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #657080;
+      --line: #d8dee6;
+      --accent: #1769aa;
+      --good: #13795b;
+      --warn: #9a5b00;
+      --bad: #b42318;
+      --chip: #eef3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 36px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }
+    header p { margin: 0; color: #cbd5e1; max-width: 980px; }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 36px;
+      background: #2c3e50;
+      border-bottom: 1px solid #22313f;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    nav a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: 800;
+      padding: 7px 11px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    nav a.primary {
+      background: #f4b400;
+      color: #17202a;
+      border-color: #d89a00;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 18px;
+      padding: 22px;
+    }
+    h2 { margin: 0 0 14px; font-size: 22px; }
+    h3 { margin: 18px 0 8px; font-size: 17px; }
+    p { margin: 8px 0; }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .stat {
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .stat b { display: block; font-size: 20px; margin-top: 4px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #eef2f7;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+    .ops {
+      color: var(--muted);
+      min-width: 145px;
+    }
+    .ops b { color: var(--ink); }
+    .profile {
+      color: var(--muted);
+      min-width: 180px;
+    }
+    .profile b { color: var(--ink); }
+    code {
+      background: #eef2f7;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: #f3f8fc;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+    .risk { color: var(--bad); font-weight: 700; }
+    .ok { color: var(--good); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+    .tag {
+      display: inline-block;
+      padding: 2px 7px;
+      margin: 2px 4px 2px 0;
+      border-radius: 999px;
+      background: var(--chip);
+      border: 1px solid #dbe7f2;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    ul { margin: 8px 0 8px 22px; padding: 0; }
+    li { margin: 5px 0; }
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 24px 28px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    @media (max-width: 760px) {
+      header, nav { padding-left: 18px; padding-right: 18px; }
+      main { padding: 16px; }
+      section { padding: 16px; }
+      table { font-size: 13px; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Analisi globale strategie e next steps</h1>
+    <p>Pagina statica di lavoro per interpretare il report, capire le famiglie di strategie e definire le prossime ipotesi di miglioramento. Non viene rigenerata dagli script del backtest.</p>
+  </header>
+
+  <nav>
+    <a class="primary" href="backtest/2026-07-09_15-04/full_report.html">Report principale</a>
+    <a href="ticker_universe.html">Ticker universe</a>
+    <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
+  </nav>
+
+  <main>
+    <section id="z">
+      <h2>Cos'e Z nel report</h2>
+      <p><code>Z</code> e' la soglia di qualita' usata per decidere quali coppie <code>strategia + asset</code> entrano nella simulazione portfolio.</p>
+      <div class="note">
+        Nel report corrente la soglia di default e' <code>Z = 0.2</code>. Significa: includi solo le coppie che hanno avuto un profitto medio per trade di circa almeno <code>+0,20%</code> sulla storia disponibile. Con questa soglia passano 139 coppie su 322.
+      </div>
+      <p>Concettualmente, <code>Z</code> non cambia le regole delle strategie. Cambia il perimetro del portafoglio: piu' e' alto, meno coppie passano; il capitale per trade aumenta perche' viene diviso su meno coppie.</p>
+      <p>Nota tecnica: il report dinamico lato browser usa <code>Z</code> come filtro interattivo; la generazione backend usa <code>MIN_AVG_PCT</code>. Sono la stessa idea: una soglia sul profitto medio percentuale della coppia.</p>
+      <div class="meta">
+        <div class="stat">Default attuale<b>Z 0.20</b></div>
+        <div class="stat">Coppie attive<b>139 / 322</b></div>
+        <div class="stat">Capitale per trade<b>$143.88</b></div>
+        <div class="stat">Capitale medio usato<b>53.0%</b></div>
+      </div>
+    </section>
+
+    <section id="mappa">
+      <h2>Mappa strategie</h2>
+      <p>La tabella descrive cosa fa ogni strategia, cosa rappresenta e dove tende a funzionare o fallire. Le indicazioni sugli asset sono qualitative: vanno validate con test walk-forward, non prese come regole definitive.</p>
+      <p>La colonna operativita' distingue la cadenza della candela analizzata e il momento di fill effettivo: le strategie con esecuzione <code>O</code> leggono la barra chiusa e operano all'Open successivo; quelle con esecuzione <code>C</code> operano al Close della stessa barra.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Strategia</th>
+            <th>Operativita'</th>
+            <th>Profilo</th>
+            <th>Logica</th>
+            <th>Significato intrinseco</th>
+            <th>Quando fallisce</th>
+            <th>Asset piu' indicati</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>S1</b><br><span class="tag">motore separato</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion azionaria.<br>Input: MACD, stocastico, EMA200.</td>
+            <td>MACD positivo ma sotto zero, stocastico basso e prezzo sotto EMA200; uscita tecnica, stop loss o massimo giorni.</td>
+            <td>Recupero controtrend su singole azioni depresse: cerca rimbalzi dopo debolezza importante.</td>
+            <td>Fallisce quando il titolo non rimbalza ma continua il repricing fondamentale; richiede controllo su qualita' del basket.</td>
+            <td>Azioni liquide, prezzi non troppo elevati, basket ampio. Meno adatta a ETF lenti o asset senza mean reversion affidabile.</td>
+          </tr>
+          <tr>
+            <td><b>S2</b><br><span class="tag">Monday turnaround</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion calendario.<br>Input: prezzi e giorno settimana.</td>
+            <td>Compra martedi' se lunedi' arriva dopo due chiusure consecutive in calo; esce quando il close supera il massimo precedente.</td>
+            <td>Effetto rimbalzo dopo pressione di vendita a inizio settimana.</td>
+            <td>Fallisce nei trend ribassisti persistenti, dove due giorni di calo non indicano panico ma continuazione.</td>
+            <td>ETF equity ampi e liquidi. Prudenza su BTC, materie prime e asset con gap o trend direzionali forti.</td>
+          </tr>
+          <tr>
+            <td><b>S3</b><br><span class="tag">seasonal long/short</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla calendario; fill Close stesso giorno.</td>
+            <td class="profile"><b>Long/short</b><br>Famiglia: calendario bond.<br>Input: calendario di borsa.</td>
+            <td>Ciclo stagionale su TLT: long verso fine mese, reverse short a fine mese, cover al settimo giorno del mese successivo.</td>
+            <td>Calendario sui bond lunghi: prova a catturare flussi ricorrenti di fine/inizio mese.</td>
+            <td>Fallisce quando il regime tassi domina la stagionalita'; lo short puo' aumentare rischio operativo.</td>
+            <td>Principalmente TLT o bond duration lunga. Poco sensata su asset non obbligazionari senza nuova validazione.</td>
+          </tr>
+          <tr>
+            <td><b>S4</b><br><span class="tag">breakout / ADX</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Close stesso giorno.</td>
+            <td class="profile"><b>Long/short</b><br>Famiglia: breakout / trend.<br>Input: prezzi, ADX14.</td>
+            <td>Breakout a 30 giorni con filtro ADX; long in trend forte, short in rottura ribassista con ADX basso; stop 3%, take profit 10%.</td>
+            <td>Strategia di espansione: cerca rotture di range e gestione asimmetrica rischio/rendimento.</td>
+            <td>Fallisce in falsi breakout e mercati laterali rumorosi; puo' soffrire su asset mean-reverting.</td>
+            <td>Asset con trend prolungati: BTC, commodity, alcuni equity index. Da controllare su bond e strumenti molto stabili.</td>
+          </tr>
+          <tr>
+            <td><b>S5</b><br><span class="tag">Monday IBS</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close lunedi'; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion calendario.<br>Input: prezzi, IBS, giorno settimana.</td>
+            <td>Compra martedi' se lunedi' chiude sotto il venerdi' e IBS &lt; 0.5; esce su forza o dopo 4 barre.</td>
+            <td>Rimbalzo breve dopo debolezza del lunedi'.</td>
+            <td>Fallisce se la debolezza del lunedi' apre una gamba ribassista piu' ampia.</td>
+            <td>Equity index liquidi. Meno utile su bond stabili o asset con trend violenti.</td>
+          </tr>
+          <tr>
+            <td><b>S6</b><br><span class="tag">turn of month</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla calendario; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: calendario.<br>Input: calendario di borsa.</td>
+            <td>Entra intorno al 17esimo giorno di borsa del mese ed esce al terzo giorno del mese successivo.</td>
+            <td>Effetto calendario/fine mese, senza leggere prezzo o volatilita'.</td>
+            <td>Fallisce quando il calendario coincide con shock macro o bear market; non ha filtro direzionale.</td>
+            <td>ETF equity ampi e bond solo se l'effetto e' validato. Fragile su BTC e commodity perche' ignora regime e volatilita'.</td>
+          </tr>
+          <tr>
+            <td><b>S7</b><br><span class="tag">weekly Williams %R</span></td>
+            <td class="ops"><b>Weekly</b><br>Controlla Close W-FRI; fill Open settimana successiva.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion settimanale.<br>Input: Williams %R weekly.</td>
+            <td>Su dati settimanali compra ipervenduto Williams %R &lt; -80; esce su rottura del massimo precedente o uscita dall'ipervenduto.</td>
+            <td>Mean reversion lenta: cerca recuperi settimanali dopo eccesso di vendita.</td>
+            <td>Fallisce su bear market persistenti: il segnale settimanale puo' restare in perdita a lungo.</td>
+            <td>Originariamente GLD settimanale; potenzialmente metalli e asset ciclici. Molto rischiosa su BTC se non filtrata.</td>
+          </tr>
+          <tr>
+            <td><b>S8</b><br><span class="tag">Larry5</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion trend-filtered.<br>Input: SMA200, RSI5.</td>
+            <td>Compra se prezzo sopra SMA200 e RSI5 &lt; 30; esce quando RSI5 &gt; 50.</td>
+            <td>Compra debolezza breve dentro trend primario rialzista.</td>
+            <td>Fallisce quando la SMA200 e' troppo lenta e il mercato passa da uptrend a downtrend rapidamente.</td>
+            <td>ETF equity ampi e liquidi. Da ridurre su asset dove la SMA200 arriva tardi dopo bolle o crash.</td>
+          </tr>
+          <tr>
+            <td><b>S9</b><br><span class="tag">RSI3 extreme</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion aggressiva.<br>Input: RSI3, prezzi.</td>
+            <td>Compra RSI3 &lt; 20; esce quando il close supera il massimo di ieri.</td>
+            <td>Mean reversion molto aggressiva su crolli verticali di breve periodo.</td>
+            <td>Fallisce quando il crollo e' inizio di trend ribassista. Nel 2018 ha sofferto molto su BTC e indici.</td>
+            <td>Equity index molto liquidi e mean-reverting. Evitare o tagliare sizing su BTC, energia e asset con trend ribassisti persistenti.</td>
+          </tr>
+          <tr>
+            <td><b>S10</b><br><span class="tag">breakout 25 giorni</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: trend following / momentum.<br>Input: prezzi, trailing stop.</td>
+            <td>Compra breakout sopra massimo delle ultime 25 chiusure; esce con trailing stop o stop di emergenza.</td>
+            <td>Trend following: cerca momentum e lascia correre i vincitori.</td>
+            <td>Fallisce in mercati laterali con falsi breakout ripetuti.</td>
+            <td>BTC e asset momentum. Meno indicata su strumenti molto mean-reverting o compressi.</td>
+          </tr>
+          <tr>
+            <td><b>S11</b><br><span class="tag">IBS mean reversion</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion intraday.<br>Input: IBS.</td>
+            <td>Compra se IBS &lt; 0.1, cioe' chiusura vicino ai minimi; esce se IBS &gt; 0.8.</td>
+            <td>Compra panico intraday e vende recupero intraday.</td>
+            <td>Fallisce nelle vendite persistenti, quando chiudere sui minimi non e' eccesso ma conferma di debolezza.</td>
+            <td>Equity index liquidi. Da filtrare su BTC, commodity e strumenti con trend molto direzionali.</td>
+          </tr>
+          <tr>
+            <td><b>S12</b><br><span class="tag">EMA200 crossover</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: trend filter / crossover.<br>Input: EMA200.</td>
+            <td>Compra quando il prezzo incrocia sopra EMA200; vende quando torna sotto EMA200.</td>
+            <td>Filtro trend primario: sta dentro i mercati forti e fuori da quelli deboli.</td>
+            <td>Fallisce in whipsaw attorno alla media, soprattutto fasi laterali.</td>
+            <td>ETF equity, BTC, asset con trend lunghi. Nel 2018 ha compensato molte perdite delle mean reversion.</td>
+          </tr>
+          <tr>
+            <td><b>S13</b><br><span class="tag">esclusa dal matrix</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla calendario; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: calendario crypto.<br>Input: calendario di borsa.</td>
+            <td>Turn-of-the-month su BTC, duplicato funzionale di S6 applicato a BTC.</td>
+            <td>Effetto calendario su asset ad alta volatilita'.</td>
+            <td>Fallisce quando il calendario viene travolto dal regime crypto; rischio molto alto senza filtro trend.</td>
+            <td>Da trattare come esperimento separato, non come default portfolio. Nel config attuale e' esclusa perche' duplicativa.</td>
+          </tr>
+          <tr>
+            <td><b>S14</b><br><span class="tag">IBS + gap down</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Open e Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: gap-down mean reversion.<br>Input: Open, Close, IBS.</td>
+            <td>Compra dopo IBS debole il giorno prima e gap down oggi; esce quando il close supera il close precedente.</td>
+            <td>Capitola su gap down dopo debolezza e cerca rimbalzo rapido.</td>
+            <td>Fallisce se il gap down e' informativo, cioe' anticipa nuova repricing negativa.</td>
+            <td>ETF equity ampi. Meno adatta ad asset con gap strutturali o trend ribassisti non filtrati.</td>
+          </tr>
+          <tr>
+            <td><b>S15</b><br><span class="tag">close-to-close</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close + VIX; fill Close stesso giorno.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: volatilita' / stress rebound.<br>Input: VIX, IBS, ADX5.</td>
+            <td>Compra al close se close scende, IBS &lt; 0.3, VIX sopra media 5 e ADX5 &gt; 40; esce al close successivo.</td>
+            <td>Rimbalzo brevissimo in stress di volatilita': trade da una seduta.</td>
+            <td>Fallisce se lo stress continua il giorno dopo o se il VIX resta alto per regime, non per eccesso temporaneo.</td>
+            <td>Equity index con VIX significativo. Non ha senso su asset senza relazione stabile con VIX.</td>
+          </tr>
+          <tr>
+            <td><b>S16</b><br><span class="tag">CCI9 mean reversion</span></td>
+            <td class="ops"><b>Daily</b><br>Controlla Close; fill Open successivo.</td>
+            <td class="profile"><b>Long</b><br>Famiglia: mean reversion CCI.<br>Input: CCI9, prezzi.</td>
+            <td>Compra quando CCI9 scende sotto -90; esce quando il close supera il massimo di ieri.</td>
+            <td>Mean reversion su eccesso di breve periodo misurato dal CCI.</td>
+            <td>Fallisce nei selloff direzionali, simile a S9/S11 ma con trigger diverso.</td>
+            <td>ETF equity liquidi. Da filtrare su BTC, energia, metalli miners e asset con drawdown persistenti.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="famiglie">
+      <h2>Famiglie e rischio nascosto</h2>
+      <div class="two-col">
+        <div>
+          <h3>Mean reversion breve</h3>
+          <p>S2, S5, S8, S9, S11, S14, S15, S16 comprano debolezza o panico. Sono utili quando il mercato rimbalza spesso, ma possono soffrire tutte insieme nei selloff persistenti.</p>
+          <p><span class="risk">Rischio:</span> tante strategie diverse possono essere in realta' la stessa scommessa: long rimbalzo dopo debolezza.</p>
+        </div>
+        <div>
+          <h3>Trend e breakout</h3>
+          <p>S4, S10, S12 cercano trend, breakout o permanenza sopra una media lunga. Tendono a proteggere meglio nei bear market, ma possono perdere per whipsaw.</p>
+          <p><span class="ok">Valore:</span> nel 2018 S12 ha fatto da stabilizzatore rispetto alle strategie di rimbalzo.</p>
+        </div>
+        <div>
+          <h3>Calendario</h3>
+          <p>S3, S6, S13 dipendono da finestre temporali. Non leggono abbastanza il contesto prezzo/volatilita'.</p>
+          <p><span class="warn">Uso prudente:</span> bene come diversificazione solo se hanno filtro regime o sizing contenuto.</p>
+        </div>
+        <div>
+          <h3>Duplicazione asset</h3>
+          <p>SPY, VOO e IVV sono molto simili. ACWI, URTH e VT sono anch'essi sovrapposti. Molte coppie possono quindi aumentare esposizione allo stesso rischio equity.</p>
+          <p><span class="warn">Implicazione:</span> contare le coppie non equivale a contare fonti indipendenti di rendimento.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="analisi-2018">
+      <h2>Analisi 2018</h2>
+      <p>Nel report corrente il 2018 chiude a circa <span class="risk">-2,87%</span>, cioe' circa <span class="risk">-$287</span> su capitale iniziale 10.000. L'esposizione media 2018 e' stata <b>54,97%</b>, quindi il problema non e' stato usare poco capitale: il problema e' stata la qualita' dei trade in un regime sfavorevole.</p>
+      <table>
+        <thead>
+          <tr><th>Mese</th><th>P&amp;L %</th><th>Trade chiusi</th><th>Lettura</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2018-02</td><td class="risk">-3,67%</td><td>132</td><td>Shock equity e BTC; molte mean reversion entrano troppo presto.</td></tr>
+          <tr><td>2018-03</td><td class="risk">-1,08%</td><td>125</td><td>Prosecuzione instabilita'; i rimbalzi sono meno puliti.</td></tr>
+          <tr><td>2018-04</td><td class="risk">-0,66%</td><td>97</td><td>Ancora debolezza su asset rischiosi.</td></tr>
+          <tr><td>2018-08</td><td class="risk">-1,24%</td><td>123</td><td>BTC, GDX e metalli/miners pesano sulle strategie di rimbalzo.</td></tr>
+          <tr><td>2018-10</td><td class="ok">+4,13%</td><td>136</td><td>Mese positivo, ma non basta a recuperare febbraio e dicembre.</td></tr>
+          <tr><td>2018-12</td><td class="risk">-3,27%</td><td>137</td><td>Selloff equity e BTC; drawdown concentrato su posizioni long mean-reversion.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Strategie peggiori nel 2018</h3>
+      <table>
+        <thead>
+          <tr><th>Strategia</th><th>Contributo stimato</th><th>Diagnosi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S9</td><td class="risk">-$230</td><td>RSI3 mean reversion troppo aggressiva in selloff persistenti.</td></tr>
+          <tr><td>S11</td><td class="risk">-$228</td><td>IBS compra chiusure sui minimi, ma nel 2018 molte erano continuazione di debolezza.</td></tr>
+          <tr><td>S6</td><td class="risk">-$197</td><td>Calendario senza filtro regime: compra anche quando il contesto e' ribassista.</td></tr>
+          <tr><td>S8</td><td class="risk">-$91</td><td>Filtro SMA200 utile ma lento nei cambi regime rapidi.</td></tr>
+          <tr><td>S2</td><td class="risk">-$81</td><td>Il turnaround settimanale non basta nei trend down.</td></tr>
+          <tr><td>S12</td><td class="ok">+$480</td><td>Trend filter/EMA200 ha compensato parte del danno: e' una componente da valorizzare.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Asset che hanno causato il problema</h3>
+      <p><b>BTC</b> e' il contributore negativo principale: circa <span class="risk">-$348</span> nel 2018. Nei dati locali BTC perde circa <span class="risk">-72,6%</span> nell'anno, con drawdown massimo vicino a <span class="risk">-81,5%</span>. Questo e' esattamente il tipo di regime in cui le mean reversion long non filtrate vengono colpite.</p>
+      <p>Altri contributi negativi: UGA, GDX, VOO/IVV/SPY in fase di selloff, PPLT e SLV. Il punto non e' che questi asset vadano esclusi sempre, ma che il loro sizing non dovrebbe essere uguale a quello di asset piu' stabili quando il regime e' contrario.</p>
+    </section>
+
+    <section id="next-steps">
+      <h2>Suggerimenti per migliorare profitti e drawdown</h2>
+      <div class="note">
+        Priorita': prima migliorare la qualita' e la robustezza del perimetro, poi aumentare <code>K</code>. Aumentare solo la leva amplifica anche i difetti.
+      </div>
+      <h3>1. Validare Z senza look-ahead</h3>
+      <p>Nel report, alzare <code>Z</code> sembra migliorare sia profitto sia drawdown:</p>
+      <table>
+        <thead>
+          <tr><th>Z</th><th>Coppie</th><th>Net storico</th><th>2018</th><th>Capitale medio</th><th>MaxDD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0.20</td><td>139</td><td>+129,3%</td><td class="risk">-2,87%</td><td>53,0%</td><td>5,1%</td></tr>
+          <tr><td>0.30</td><td>108</td><td>+147,7%</td><td class="ok">+0,45%</td><td>56,5%</td><td>3,7%</td></tr>
+          <tr><td>0.40</td><td>79</td><td>+172,7%</td><td class="ok">+4,60%</td><td>60,7%</td><td>3,2%</td></tr>
+          <tr><td>0.50</td><td>60</td><td>+195,3%</td><td class="ok">+7,90%</td><td>66,3%</td><td>3,1%</td></tr>
+        </tbody>
+      </table>
+      <p>Questi numeri sono promettenti ma potenzialmente overfit, perche' la soglia e' calcolata sulla storia completa. Serve un test walk-forward: selezione delle coppie su una finestra passata, trading sulla finestra successiva.</p>
+
+      <h3>2. Limitare i cluster, non solo le singole coppie</h3>
+      <ul>
+        <li>Mettere un cap alla famiglia mean-reversion breve, perche' S9/S11/S16/S14 possono perdere insieme.</li>
+        <li>Mettere un cap agli asset altamente correlati: SPY/VOO/IVV non devono contare come tre fonti indipendenti.</li>
+        <li>Mettere un cap a BTC e commodity volatili, o ridurne il capitale quando sono sotto media lunga.</li>
+      </ul>
+
+      <h3>3. Aggiungere filtri regime alle mean reversion</h3>
+      <ul>
+        <li>Per S9/S11/S16 su BTC, UGA, GDX e PPLT: richiedere prezzo sopra EMA/SMA200 o trend non ribassista.</li>
+        <li>In alternativa, usare sizing ridotto quando il prezzo e' sotto EMA200 invece di spegnere completamente la coppia.</li>
+        <li>Per S6/S13 calendario: bloccare ingressi quando volatilita' o drawdown dell'asset sono elevati.</li>
+      </ul>
+
+      <h3>4. Aumentare K solo dopo la pulizia</h3>
+      <p>Con <code>Z = 0.2</code>, alzare <code>K</code> aumenta profitto storico ma non migliora davvero il 2018:</p>
+      <table>
+        <thead>
+          <tr><th>K</th><th>Net storico</th><th>2018</th><th>Capitale medio</th><th>Trade saltati</th><th>MaxDD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2.0</td><td>+129,3%</td><td class="risk">-2,87%</td><td>53,0%</td><td>480</td><td>5,1%</td></tr>
+          <tr><td>3.0</td><td>+167,3%</td><td class="risk">-3,07%</td><td>68,9%</td><td>2.976</td><td>5,2%</td></tr>
+          <tr><td>4.0</td><td>+184,8%</td><td class="risk">-5,81%</td><td>75,0%</td><td>5.205</td><td>6,3%</td></tr>
+          <tr><td>5.0</td><td>+200,8%</td><td class="risk">-4,56%</td><td>79,6%</td><td>6.953</td><td>7,0%</td></tr>
+        </tbody>
+      </table>
+      <p>Interpretazione: <code>K</code> e' una leva di sizing, non una leva di qualita'. Va usata dopo aver ridotto i trade fragili.</p>
+    </section>
+
+    <section id="esperimenti">
+      <h2>Esperimenti consigliati</h2>
+      <table>
+        <thead>
+          <tr><th>Obiettivo</th><th>Esperimento</th><th>Cosa misurare</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Meno drawdown</td>
+            <td>Walk-forward con <code>Z</code> tra 0.30 e 0.50; selezione coppie solo su dati passati.</td>
+            <td>MaxDD, anni negativi, stabilita' per finestra, numero coppie attive.</td>
+          </tr>
+          <tr>
+            <td>Piu' profitto con rischio controllato</td>
+            <td>Prima alzare <code>Z</code>, poi testare <code>K</code> 2.5 / 3.0 sul portafoglio filtrato.</td>
+            <td>CAGR, Sortino, MaxDD, giorni vicini al cash cap, trade saltati.</td>
+          </tr>
+          <tr>
+            <td>Ridurre fragilita' BTC</td>
+            <td>BTC solo con S10/S12 o mean-reversion BTC dimezzata/sospesa sotto EMA200.</td>
+            <td>2018, 2022, drawdown BTC-specifico, contributo per asset.</td>
+          </tr>
+          <tr>
+            <td>Meno duplicazione</td>
+            <td>Raggruppare SPY/VOO/IVV e ACWI/URTH/VT; scegliere una sola esposizione o cap di gruppo.</td>
+            <td>Profitto per rischio, correlazione tra trade, capitale effettivo per fattore.</td>
+          </tr>
+          <tr>
+            <td>Piu' trades ma con qualita'</td>
+            <td>Aggiungere nuove coppie solo se passano test out-of-sample, non abbassando semplicemente <code>Z</code>.</td>
+            <td>Profit factor out-of-sample, media per trade, stabilita' per anno.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere al report una tabella contributo anno x strategia e anno x asset.</s></td>
+            <td><s>Capacita' di spiegare anni negativi senza analisi manuale.</s> Applicato: il report principale ora include tabelle di contributo annuale per strategia e asset.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td>Usare le nuove tabelle contributo per investigare gli anni negativi prima di cambiare regole o sizing.</td>
+            <td>Capire se il problema nasce da una famiglia strategica, da un asset, o da una concentrazione di entrambi.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere al report un filtro multi-select sui ticker inclusi.</s></td>
+            <td><s>Verificare rapidamente metriche, cash-gating ed esposizione su sottoinsiemi di asset.</s> Applicato: il report principale ora ricalcola il portafoglio quando si selezionano o deselezionano ticker.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere una ricerca testuale nella dropdown ticker del report.</s></td>
+            <td><s>Trovare rapidamente ticker come <code>SPYX</code> nella lista multi-select.</s> Applicato: la dropdown ticker ora filtra visivamente le opzioni mentre la selezione continua a guidare il ricalcolo del report.</td>
+          </tr>
+          <tr>
+            <td>Report piu' realistico</td>
+            <td><s>Aggiungere commissioni variabili al report portfolio.</s></td>
+            <td><s>Rendere Net P&amp;L, equity, mensili e contributi meno ottimistici.</s> Applicato: default <code>0.015%</code> per lato, con controllo modificabile nel report e ricalcolo interattivo.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere una pagina Universo ticker con paniere S1 e ticker usati nel backtest principale.</s></td>
+            <td><s>Vedere quali ticker sono nel paniere e quali sono marcati USED nel report matrix.</s> Applicato: la nuova pagina mostra ticker, stato backtest, tipo asset, file dati e strategie nella colonna Note.</td>
+          </tr>
+          <tr>
+            <td>Universo operativo</td>
+            <td><s>Usare <code>SMCX</code> e <code>SPYX</code> al posto di <code>ESCE</code>.</s></td>
+            <td><s>Mantenere il perimetro compatibile con Alpaca.</s> Applicato: <code>SMCX</code> e <code>SPYX</code> sono stati aggiunti all'universo matrix; <code>ESCE</code> resta escluso.</td>
+          </tr>
+          <tr>
+            <td>Universo operativo</td>
+            <td><s>Sostituire <code>SMCX</code> con <code>SMCI</code> nel matrix backtest.</s></td>
+            <td><s>Evitare una serie quasi tutta a zero prima di fine 2024.</s> <s>Applicato come cambio intenzionale di universo: policy corrente "solo <code>SMCI</code>" nel matrix backtest; <code>SMCX.csv</code> resta conservato in <code>unused</code>.</s> Superato: l'universo matrix e' ora governato dalla lista statica <code>M_ticker</code> e include <code>SMCX</code>, non <code>SMCI</code>.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere alla Mappa strategie cadenza operativa e timing di controllo/fill delle candele.</s></td>
+            <td><s>Capire subito se una strategia lavora daily, weekly, all'Open o al Close.</s> Applicato: la tabella ora include la colonna Operativita'.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Aggiungere direzione ammessa, famiglia di rischio e input speciali alla Mappa strategie.</s></td>
+            <td><s>Capire subito se una strategia e' long, short o long/short, quale rischio introduce e se richiede input come VIX.</s> Applicato: la tabella ora include la colonna Profilo.</td>
+          </tr>
+          <tr>
+            <td>Report piu' utile</td>
+            <td><s>Mostrare holding medio storico nelle tabelle del report principale.</s></td>
+            <td><s>Capire se il perimetro attivo e' fatto da trade rapidi o posizioni piu' lente.</s> Applicato: il report principale ora include Holding Medio Storico per strategia e per asset, oltre al valore per coppia nella Matrice Combinazioni.</td>
+          </tr>
+          <tr>
+            <td>Sizing piu' bilanciato</td>
+            <td><s>Aggiungere un moltiplicatore <code>M</code> per ticker alla formula di sizing del report portfolio.</s></td>
+            <td><s>Ridurre l'esposizione verso ticker o mercati sovrapposti senza cambiare il fattore globale <code>K</code>.</s> Applicato: il report usa <code>K × X / coppie attive × M_ticker</code> e permette di modificare ticker inclusi e <code>M</code> nello stesso pop-up, con copia dei parametri correnti.</td>
+          </tr>
+          <tr>
+            <td>Controllo regressioni</td>
+            <td><s>Salvare una memoria CSV append-only dei risultati del backtest principale.</s></td>
+            <td><s>Confrontare rapidamente parametri, metriche e delta rispetto alla run precedente dopo modifiche e refactor.</s> Applicato: <code>results/backtest_history.csv</code> registra input, risultati chiave e delta della run.</td>
+          </tr>
+          <tr>
+            <td>Organizzazione output</td>
+            <td><s>Spostare i CSV trade per coppia in una sottocartella dedicata della run.</s></td>
+            <td><s>Tenere la root della run riservata a HTML, JSON e metadati sintetici.</s> Applicato: i CSV <code>REPORT_strategy*.csv</code> vengono scritti in <code>trades_report/</code>, con lettura compatibile nei report.</td>
+          </tr>
+          <tr>
+            <td>Universo operativo</td>
+            <td><s>Migrare il paniere Strategy 1 in <code>used_by_s1/unused</code>.</s></td>
+            <td><s>Rendere S1 guidata da cartelle e pronta a escludere ticker spostandoli in <code>unused</code>.</s> Applicato: S1 legge <code>engine/data/daily/used_by_s1</code> tramite il resolver centralizzato.</td>
+          </tr>
+          <tr>
+            <td>Universo operativo</td>
+            <td><s>Migrare il matrix universe in <code>daily/used</code>, <code>daily/unused</code> e <code>daily/inputs</code>.</s></td>
+            <td><s>Rendere backtest, downloader e report allineati spostando i file invece di modificare liste duplicate.</s> <s>Applicato: il backtest matrix, il downloader Alpaca, il report e Universo ticker leggono i path dal resolver; la policy corrente usa <code>SMCI</code> come ticker tradabile e lascia <code>SMCX</code> in <code>unused</code>.</s> Superato: i dati matrix sono unificati in <code>engine/data/daily/assets</code> e l'inclusione e' decisa solo dalla lista statica <code>M_ticker</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="changelog">
+      <h2>Changelog operativo</h2>
+      <p><b>Riga barrata = obsoleta/già applicata.</b> Le righe vecchie restano visibili per mantenere traccia delle decisioni e dei next step completati.</p>
+      <ul>
+        <li>2026-07-06: aggiunto link evidente dal report principale al dizionario comune.</li>
+        <li>2026-07-06: aggiunte al report principale le tabelle contributo annuo per strategia e per asset.</li>
+        <li>2026-07-06: rinominato il link/pulsante da Dizionario ad Analisi globale e spostato al primo posto nella navigation bar del report.</li>
+        <li>2026-07-07: aggiunto al report principale il filtro multi-select ticker con default a tutti selezionati; il ricalcolo aggiorna selezione coppie, sizing, cash-gating, metriche, grafici e contributi annuali.</li>
+        <li>2026-07-07: aggiunta ricerca testuale nella dropdown ticker del report principale, utile per trovare rapidamente ticker come <code>SPYX</code>.</li>
+        <li>2026-07-07: aggiunto calcolo commissioni al report portfolio: default <code>0.015%</code> del valore trade per lato, applicato a ingresso e uscita, con input interattivo.</li>
+        <li>2026-07-07: aggiunta pagina Universo ticker con paniere Strategy 1, ticker USED nel report principale, tipo asset, file dati e strategie per ticker.</li>
+        <li>2026-07-07: aggiunti <code>SMCX</code> e <code>SPYX</code> all'universo matrix; <code>ESCE</code> escluso per compatibilita' Alpaca.</li>
+        <li>2026-07-08: valutata la sostituzione <code>SMCX</code> con <code>SMCI</code>, poi temporaneamente annullata dopo controllo regressione per preservare il paniere e i risultati del backtest precedente.</li>
+        <li>2026-07-08: aggiunta alla Mappa strategie la colonna Operativita' con cadenza, candela controllata e momento di fill.</li>
+        <li>2026-07-08: aggiunta alla Mappa strategie la colonna Profilo con direzione ammessa, famiglia di rischio e input speciali.</li>
+        <li>2026-07-08: aggiunta al report principale la sezione Holding Medio Storico, aggregata per strategia e per asset e ricalcolata dai filtri correnti.</li>
+        <li><s>2026-07-09: aggiunto al report portfolio il moltiplicatore <code>M</code> per ticker: il sizing effettivo diventa <code>K × X / coppie attive × M_ticker</code>, con controllo interattivo nella dropdown ticker.</s> Superato: il controllo <code>M</code> ora vive in un pop-up dedicato.</li>
+        <li><s>2026-07-09: configurati i moltiplicatori <code>M</code> della tabella di bilanciamento per i ticker matrix disponibili; il valore indicato per <code>SMCX</code> e' stato applicato a <code>SMCI</code>, ticker operativo corrente.</s> Superato: la lista statica corrente include <code>SMCX</code> ed esclude <code>SMCI</code>.</li>
+        <li>2026-07-09: spostato il controllo dei moltiplicatori <code>M</code> in un pop-up dedicato del report e aggiunto il comando per copiare capitale, <code>K</code>, soglia <code>Z</code>, commissioni, ticker selezionati e dizionario <code>M_ticker</code>.</li>
+        <li>2026-07-09: unificati nel report il vecchio dropdown ticker e il pop-up coefficienti: un solo pulsante apre la lista con checkbox ticker e valore <code>M</code> nella stessa riga.</li>
+        <li>2026-07-09: unificate le vecchie cartelle matrix <code>used</code> e <code>unused</code> in <code>engine/data/daily/assets</code>; il backtest include solo i ticker presenti nella lista statica <code>M_ticker</code>.</li>
+        <li>2026-07-09: superata la policy temporanea "solo <code>SMCI</code>": il ticker configurato nella lista statica e' <code>SMCX</code>, mentre <code>SMCI</code> resta solo come CSV locale non incluso.</li>
+        <li>2026-07-09: semplificata la top bar del report e delle pagine comuni: restano solo <code>Report principale</code>, <code>Ticker universe</code> e <code>Analisi e next steps</code>.</li>
+        <li>2026-07-08: aggiunta <code>results/backtest_history.csv</code> come memoria append-only delle run principali, con delta rispetto alla riga precedente per controllo regressioni.</li>
+        <li>2026-07-08: spostati i CSV trade per coppia in <code>trades_report/</code> dentro ogni run, mantenendo <code>full_report</code> e Universo ticker compatibili con il nuovo layout.</li>
+        <li>2026-07-08: migrato il paniere Strategy 1 in una cartella <code>used_by_s1</code> guidata dal resolver.</li>
+        <li><s>2026-07-08: migrato il matrix universe in <code>engine/data/daily/used</code>, <code>unused</code> e <code>inputs</code>; backtest, downloader, report e VIX input usano il resolver centralizzato.</s> Superato: i dati matrix sono ora in <code>engine/data/daily/assets</code>.</li>
+        <li><s>2026-07-09: resa definitiva la policy "solo <code>SMCI</code>" nel matrix universe: <code>SMCI.csv</code> e' in <code>daily/used</code>, <code>SMCX.csv</code> e' conservato in <code>daily/unused</code>; i delta del backtest rispetto al baseline <code>SMCX</code> sono attesi.</s> Superato: <code>SMCX</code> e' il ticker configurato, <code>SMCI</code> non e' nel matrix.</li>
+        <li>2026-07-09: unificata la root dati sotto <code>engine/data/daily</code>: <code>used_by_s1</code> e' stata spostata da <code>engine/data/paniere_spy</code> a <code>engine/data/daily/used_by_s1</code>, e la vecchia cartella <code>paniere_spy</code> e' stata rimossa.</li>
+        <li>2026-07-09: standardizzato il naming dei 503 CSV S1 in <code>engine/data/daily/used_by_s1</code>: rimossi i suffissi <code>_dati</code> e aggiornato il downloader S1 per scrivere <code>TICKER.csv</code>.</li>
+        <li><s>2026-07-09: rimossa la configurazione ticker statica dal backtest matrix: i ticker sono letti da <code>engine/data/daily/used</code>, i metadati strategie matrix vivono in <code>engine/strategy_config.py</code> e le variabili operative live sono state spostate in <code>live/config.py</code>.</s> Superato: la lista statica <code>M_ticker</code> e' ora la sorgente dell'universo matrix.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Creato manualmente il 2026-07-06 come analisi globale comune in <code>results/</code>. Questo file e' statico e non viene rigenerato dal backtest.
+  </footer>
+</body>
+</html>
