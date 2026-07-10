@@ -162,7 +162,7 @@
   </header>
 
   <nav>
-    <a class="primary" href="backtest/2026-07-10_08-51/full_report.html">Report principale</a>
+    <a class="primary" href="backtest/latest/full_report.html">Report principale</a>
     <a href="ticker_universe.html">Ticker universe</a>
     <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
     <a href="strategy_documentation.html">Documentazione strategie</a>
@@ -522,6 +522,11 @@
             <td><s>Rendere Net P&amp;L, equity, mensili e contributi meno ottimistici.</s> Applicato: default <code>0.015%</code> per lato, con controllo modificabile nel report e ricalcolo interattivo.</td>
           </tr>
           <tr>
+            <td>Controllo rischio</td>
+            <td><s>Aggiungere uno stop loss di emergenza comune a tutte le strategie matrix.</s></td>
+            <td><s>Limitare perdite estreme non gestite dalle singole strategie e permettere analisi di sensibilita'.</s> Applicato: default <code>40%</code>, trigger nel motore comune, valore fisso per run e tabella report delle coppie che hanno toccato lo stop.</td>
+          </tr>
+          <tr>
             <td>Report piu' utile</td>
             <td><s>Aggiungere una pagina Universo ticker con paniere S1 e ticker usati nel backtest principale.</s></td>
             <td><s>Vedere quali ticker sono nel paniere e quali sono marcati USED nel report matrix.</s> Applicato: la nuova pagina mostra ticker, stato backtest, tipo asset, file dati e strategie nella colonna Note.</td>
@@ -616,6 +621,7 @@
         <li>2026-07-10: aggiornato <code>results/backtest_history.csv</code>: rimosso <code>prev_run_dir</code>, raggruppate le colonne per prefisso e collegata ogni nuova run a un commit Git univoco creato automaticamente all'avvio del backtest.</li>
         <li>2026-07-10: riordinata la tabella <code>Backtest history</code> per mostrare prima risultati e delta, con delta positivi e negativi colorati.</li>
         <li>2026-07-10: aggiunta la pagina <code>strategy_documentation.html</code> con documentazione testuale delle strategie; per ora contiene l'analisi di Strategy 1.</li>
+        <li><s>2026-07-10: aggiunto stop loss di emergenza comune al <code>40%</code> per tutte le strategie matrix, con colonna di motivo uscita nei CSV trade e controllo interattivo nel report principale.</s> Aggiornato: il controllo interattivo e' stato rimosso per evitare simulazioni temporali fuorvianti; il report mostra il valore fisso della run e il conteggio stop per strategia/asset.</li>
       </ul>
     </section>
   </main>
