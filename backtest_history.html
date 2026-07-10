@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backtest history</title>
+  <style>
+    :root { --bg:#f6f8fb; --panel:#fff; --ink:#1f2937; --muted:#6b7280; --line:#d7dde6; --accent:#2563eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    header { padding:26px 36px 18px; background:#fff; border-bottom:1px solid var(--line); }
+    h1 { margin:0 0 8px; font-size:30px; }
+    nav { display:flex; flex-wrap:wrap; gap:8px; padding:10px 36px; background:#2c3e50; border-bottom:1px solid #22313f; position:sticky; top:0; z-index:2; }
+    nav a { color:#ecf0f1; text-decoration:none; padding:8px 12px; border-radius:6px; font-weight:700; background:rgba(255,255,255,.08); }
+    nav a.primary { background:var(--accent); color:white; }
+    main { padding:22px 36px 36px; }
+    section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:22px; margin-bottom:18px; }
+    .meta { color:var(--muted); font-size:14px; margin:8px 0 16px; }
+    .stats { display:flex; flex-wrap:wrap; gap:12px; margin:16px 0; }
+    .stat { background:#f9fafb; border:1px solid var(--line); border-radius:8px; padding:10px 14px; min-width:145px; }
+    .stat b { display:block; font-size:20px; margin-top:2px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:13px; background:white; }
+    th,td { border:1px solid var(--line); padding:8px 9px; text-align:left; vertical-align:top; white-space:nowrap; }
+    thead tr:first-child th { background:#dbeafe; text-align:center; }
+    thead tr:nth-child(2) th { background:#eef2f7; text-transform:uppercase; font-size:12px; }
+    code { background:#eef2f7; border-radius:4px; padding:2px 4px; }
+    a { color:#1d4ed8; }
+    ul { margin:8px 0 0 20px; padding:0; }
+    li { margin:5px 0; }
+    @media (max-width:760px) { header,nav { padding-left:18px; padding-right:18px; } main { padding:16px; } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Backtest history</h1>
+    <p class="meta">Registro append-only delle run matrix, con input, risultati e delta rispetto alla run precedente.</p>
+  </header>
+  <nav>
+    <a href="backtest/2026-07-10_08-51/full_report.html">Report principale</a>
+    <a href="ticker_universe.html">Ticker universe</a>
+    <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
+    <a class="primary" href="backtest_history.html">Backtest history</a>
+  </nav>
+  <main>
+    <section>
+      <h2>Ultima run</h2>
+      <p class="meta">Ultima run: <a href="backtest/2026-07-10_08-51/full_report.html">2026-07-10_08-51</a> · 2026-07-10T08:52:58</p><div class="stats"><div class="stat">Net P&amp;L<b>17226.57</b></div><div class="stat">CAGR<b>9.99%</b></div><div class="stat">MaxDD<b>6.09%</b></div><div class="stat">Trade<b>11177</b></div><div class="stat">Attive<b>98</b></div><div class="stat">Commit<b>273a1c9</b></div></div>
+    </section>
+    <section>
+      <h2>Storico run</h2>
+      <div class="table-wrap"><table id="history-table"><thead><tr><th colspan="3">Run</th><th colspan="7">Input</th><th colspan="4">Universo</th><th colspan="4">Portfolio</th><th colspan="8">Risultati</th><th colspan="5">Delta</th></tr><tr><th>Registrata</th><th>Commit</th><th>Report</th><th>Start</th><th>Capitale</th><th>K</th><th>Y</th><th>Comm. %</th><th>Soglia %</th><th>Screening</th><th>Strategie</th><th>Asset</th><th>Combo</th><th>Passing</th><th>Attive</th><th>Trade</th><th>Skip cash</th><th>Per trade</th><th>Net P&amp;L</th><th>Equity</th><th>CAGR %</th><th>MaxDD %</th><th>Sortino</th><th>Comm.</th><th>Esp. media %</th><th>Esp. max %</th><th>Δ P&amp;L</th><th>Δ CAGR</th><th>Δ MaxDD</th><th>Δ Trade</th><th>Δ Attive</th></tr></thead><tbody><tr><td>2026-07-10T08:52:58</td><td><code>273a1c9</code></td><td><a href="backtest/2026-07-10_08-51/full_report.html">2026-07-10_08-51</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>252</td><td>98</td><td>98</td><td>11177</td><td>51</td><td>204.08</td><td>17226.57</td><td>27226.57</td><td>9.99</td><td>6.09</td><td>4.56</td><td>578.27</td><td>47.8</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-10T08:34:14</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-10_08-32/full_report.html">2026-07-10_08-32</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>252</td><td>98</td><td>98</td><td>11177</td><td>51</td><td>204.08</td><td>17226.57</td><td>27226.57</td><td>9.99</td><td>6.09</td><td>4.56</td><td>578.27</td><td>47.8</td><td>100.0</td><td>4363.17</td><td>1.81</td><td>1.09</td><td>1078.0</td><td>2.0</td></tr><tr><td>2026-07-09T15:23:10</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-09_15-04/full_report.html">2026-07-09_15-04</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>251</td><td>96</td><td>96</td><td>10099</td><td>15</td><td>208.33</td><td>12863.4</td><td>22863.4</td><td>8.18</td><td>5.0</td><td>3.62</td><td>526.03</td><td>44.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T15:14:26</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-09_15-04/full_report.html">2026-07-09_15-04</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>251</td><td>96</td><td>96</td><td>10099</td><td>15</td><td>208.33</td><td>12863.4</td><td>22863.4</td><td>8.18</td><td>5.0</td><td>3.62</td><td>526.03</td><td>44.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T15:06:02</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-09_15-04/full_report.html">2026-07-09_15-04</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>251</td><td>96</td><td>96</td><td>10099</td><td>15</td><td>208.33</td><td>12863.4</td><td>22863.4</td><td>8.18</td><td>5.0</td><td>3.62</td><td>526.03</td><td>44.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T14:57:28</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-09_14-55/full_report.html">2026-07-09_14-55</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>251</td><td>96</td><td>96</td><td>10099</td><td>15</td><td>208.33</td><td>12863.4</td><td>22863.4</td><td>8.18</td><td>5.0</td><td>3.62</td><td>526.03</td><td>44.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T14:38:27</td><td><code>76b6a35</code></td><td><a href="backtest/2026-07-09_14-36/full_report.html">2026-07-09_14-36</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>18</td><td>251</td><td>96</td><td>96</td><td>10099</td><td>15</td><td>208.33</td><td>12863.4</td><td>22863.4</td><td>8.18</td><td>5.0</td><td>3.62</td><td>526.03</td><td>44.1</td><td>100.0</td><td>-2264.3</td><td>-0.97</td><td>-0.56</td><td>-6754.0</td><td>-64.0</td></tr><tr><td>2026-07-09T11:53:32</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-09_11-51/full_report.html">2026-07-09_11-51</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>350</td><td>160</td><td>160</td><td>16853</td><td>501</td><td>125.0</td><td>15127.7</td><td>25127.7</td><td>9.15</td><td>5.56</td><td>3.97</td><td>631.99</td><td>53.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T11:04:35</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-09_11-02/full_report.html">2026-07-09_11-02</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>350</td><td>160</td><td>160</td><td>16853</td><td>501</td><td>125.0</td><td>15127.7</td><td>25127.7</td><td>9.15</td><td>5.56</td><td>3.97</td><td>631.99</td><td>53.1</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-09T10:39:32</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-09_10-37/full_report.html">2026-07-09_10-37</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>350</td><td>160</td><td>160</td><td>16853</td><td>501</td><td>125.0</td><td>15127.7</td><td>25127.7</td><td>9.15</td><td>5.56</td><td>3.97</td><td>631.99</td><td>53.1</td><td>100.0</td><td>2526.69</td><td>1.09</td><td>0.2</td><td>959.0</td><td>2.0</td></tr><tr><td>2026-07-08T17:43:42</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-08_17-41/full_report.html">2026-07-08_17-41</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>349</td><td>158</td><td>158</td><td>15894</td><td>346</td><td>126.58</td><td>12601.01</td><td>22601.01</td><td>8.06</td><td>5.36</td><td>3.44</td><td>603.57</td><td>51.0</td><td>100.0</td><td>-2526.69</td><td>-1.1</td><td>-0.2</td><td>-959.0</td><td>-2.0</td></tr><tr><td>2026-07-08T17:30:53</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-08_17-28/full_report.html">2026-07-08_17-28</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>350</td><td>160</td><td>160</td><td>16853</td><td>501</td><td>125.0</td><td>15127.7</td><td>25127.7</td><td>9.16</td><td>5.56</td><td>3.97</td><td>631.99</td><td>53.1</td><td>100.0</td><td>2526.69</td><td>1.1</td><td>0.2</td><td>959.0</td><td>2.0</td></tr><tr><td>2026-07-08T16:30:09</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-08_16-27/full_report.html">2026-07-08_16-27</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>349</td><td>158</td><td>158</td><td>15894</td><td>346</td><td>126.58</td><td>12601.01</td><td>22601.01</td><td>8.06</td><td>5.36</td><td>3.44</td><td>603.57</td><td>51.0</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-08T16:13:37</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-08_16-11/full_report.html">2026-07-08_16-11</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>349</td><td>158</td><td>158</td><td>15894</td><td>346</td><td>126.58</td><td>12601.01</td><td>22601.01</td><td>8.06</td><td>5.36</td><td>3.44</td><td>603.57</td><td>51.0</td><td>100.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>2026-07-08T16:10:32</td><td><code>3e2b147</code></td><td><a href="backtest/2026-07-08_13-03/full_report.html">2026-07-08_13-03</a></td><td>2016</td><td>10000</td><td>2.0</td><td>100</td><td>0.015</td><td>0.2</td><td>True</td><td>14</td><td>25</td><td>349</td><td>158</td><td>158</td><td>15894</td><td>346</td><td>126.58</td><td>12601.01</td><td>22601.01</td><td>8.06</td><td>5.36</td><td>3.44</td><td>603.57</td><td>51.0</td><td>100.0</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>Miglioramenti possibili</h2>
+      <ul>
+        <li>Aggiungere tag manuali per distinguere refactor, cambio universo, cambio soglie e refresh dati.</li>
+        <li>Salvare un diff sintetico dei parametri rispetto alla run precedente.</li>
+        <li>Separare metriche in-sample e out-of-sample quando sara' disponibile una validazione walk-forward.</li>
+        <li>Aggiungere link al commit remoto quando il repository privato avra' un URL stabile da usare internamente.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

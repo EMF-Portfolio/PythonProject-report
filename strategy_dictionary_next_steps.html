@@ -162,9 +162,10 @@
   </header>
 
   <nav>
-    <a class="primary" href="backtest/2026-07-09_15-04/full_report.html">Report principale</a>
+    <a class="primary" href="backtest/2026-07-10_08-51/full_report.html">Report principale</a>
     <a href="ticker_universe.html">Ticker universe</a>
     <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
+    <a href="backtest_history.html">Backtest history</a>
   </nav>
 
   <main>
@@ -557,7 +558,7 @@
           <tr>
             <td>Controllo regressioni</td>
             <td><s>Salvare una memoria CSV append-only dei risultati del backtest principale.</s></td>
-            <td><s>Confrontare rapidamente parametri, metriche e delta rispetto alla run precedente dopo modifiche e refactor.</s> Applicato: <code>results/backtest_history.csv</code> registra input, risultati chiave e delta della run.</td>
+            <td><s>Confrontare rapidamente parametri, metriche e delta rispetto alla run precedente dopo modifiche e refactor.</s> Applicato: <code>results/backtest_history.csv</code> registra input, risultati chiave e delta della run; aggiornato con commit univoco, schema raggruppato e pagina dedicata.</td>
           </tr>
           <tr>
             <td>Organizzazione output</td>
@@ -610,6 +611,8 @@
         <li>2026-07-09: standardizzato il naming dei 503 CSV S1 in <code>engine/data/daily/used_by_s1</code>: rimossi i suffissi <code>_dati</code> e aggiornato il downloader S1 per scrivere <code>TICKER.csv</code>.</li>
         <li><s>2026-07-09: rimossa la configurazione ticker statica dal backtest matrix: i ticker sono letti da <code>engine/data/daily/used</code>, i metadati strategie matrix vivono in <code>engine/strategy_config.py</code> e le variabili operative live sono state spostate in <code>live/config.py</code>.</s> Superato: la lista statica <code>M_ticker</code> e' ora la sorgente dell'universo matrix.</li>
         <li>2026-07-10: riallineata la lista statica <code>M_ticker</code> alla policy "solo <code>SMCI</code>" e rimosso <code>SMCX.csv</code> da <code>engine/data/daily/assets</code>: <code>SMCX</code> non genera combinazioni matrix o report.</li>
+        <li>2026-07-10: aggiunta la pagina <code>backtest_history.html</code> con storico run, input, risultati, delta e miglioramenti possibili; la top bar include il nuovo link <code>Backtest history</code>.</li>
+        <li>2026-07-10: aggiornato <code>results/backtest_history.csv</code>: rimosso <code>prev_run_dir</code>, raggruppate le colonne per prefisso e collegata ogni nuova run a un commit Git univoco creato automaticamente all'avvio del backtest.</li>
       </ul>
     </section>
   </main>
