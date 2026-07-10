@@ -532,7 +532,7 @@
           <tr>
             <td>Universo operativo</td>
             <td><s>Sostituire <code>SMCX</code> con <code>SMCI</code> nel matrix backtest.</s></td>
-            <td><s>Evitare una serie quasi tutta a zero prima di fine 2024.</s> <s>Applicato come cambio intenzionale di universo: policy corrente "solo <code>SMCI</code>" nel matrix backtest; <code>SMCX.csv</code> resta conservato in <code>unused</code>.</s> Superato: l'universo matrix e' ora governato dalla lista statica <code>M_ticker</code> e include <code>SMCX</code>, non <code>SMCI</code>.</td>
+            <td><s>Evitare una serie quasi tutta a zero prima di fine 2024.</s> <s>Applicato come cambio intenzionale di universo: policy corrente "solo <code>SMCI</code>" nel matrix backtest.</s> Confermato: l'universo matrix e' governato dalla lista statica <code>M_ticker</code>, include <code>SMCI</code>, non include <code>SMCX</code> e il file <code>SMCX.csv</code> e' stato rimosso dagli asset.</td>
           </tr>
           <tr>
             <td>Report piu' utile</td>
@@ -595,20 +595,21 @@
         <li>2026-07-08: aggiunta alla Mappa strategie la colonna Profilo con direzione ammessa, famiglia di rischio e input speciali.</li>
         <li>2026-07-08: aggiunta al report principale la sezione Holding Medio Storico, aggregata per strategia e per asset e ricalcolata dai filtri correnti.</li>
         <li><s>2026-07-09: aggiunto al report portfolio il moltiplicatore <code>M</code> per ticker: il sizing effettivo diventa <code>K × X / coppie attive × M_ticker</code>, con controllo interattivo nella dropdown ticker.</s> Superato: il controllo <code>M</code> ora vive in un pop-up dedicato.</li>
-        <li><s>2026-07-09: configurati i moltiplicatori <code>M</code> della tabella di bilanciamento per i ticker matrix disponibili; il valore indicato per <code>SMCX</code> e' stato applicato a <code>SMCI</code>, ticker operativo corrente.</s> Superato: la lista statica corrente include <code>SMCX</code> ed esclude <code>SMCI</code>.</li>
+        <li>2026-07-09: configurati i moltiplicatori <code>M</code> della tabella di bilanciamento per i ticker matrix disponibili; il valore indicato per <code>SMCX</code> e' stato applicato a <code>SMCI</code>, ticker operativo corrente.</li>
         <li>2026-07-09: spostato il controllo dei moltiplicatori <code>M</code> in un pop-up dedicato del report e aggiunto il comando per copiare capitale, <code>K</code>, soglia <code>Z</code>, commissioni, ticker selezionati e dizionario <code>M_ticker</code>.</li>
         <li>2026-07-09: unificati nel report il vecchio dropdown ticker e il pop-up coefficienti: un solo pulsante apre la lista con checkbox ticker e valore <code>M</code> nella stessa riga.</li>
         <li>2026-07-09: unificate le vecchie cartelle matrix <code>used</code> e <code>unused</code> in <code>engine/data/daily/assets</code>; il backtest include solo i ticker presenti nella lista statica <code>M_ticker</code>.</li>
-        <li>2026-07-09: superata la policy temporanea "solo <code>SMCI</code>": il ticker configurato nella lista statica e' <code>SMCX</code>, mentre <code>SMCI</code> resta solo come CSV locale non incluso.</li>
+        <li><s>2026-07-09: superata la policy temporanea "solo <code>SMCI</code>": il ticker configurato nella lista statica e' <code>SMCX</code>, mentre <code>SMCI</code> resta solo come CSV locale non incluso.</s> Superato: la lista statica corrente include <code>SMCI</code> ed esclude <code>SMCX</code>.</li>
         <li>2026-07-09: semplificata la top bar del report e delle pagine comuni: restano solo <code>Report principale</code>, <code>Ticker universe</code> e <code>Analisi e next steps</code>.</li>
         <li>2026-07-08: aggiunta <code>results/backtest_history.csv</code> come memoria append-only delle run principali, con delta rispetto alla riga precedente per controllo regressioni.</li>
         <li>2026-07-08: spostati i CSV trade per coppia in <code>trades_report/</code> dentro ogni run, mantenendo <code>full_report</code> e Universo ticker compatibili con il nuovo layout.</li>
         <li>2026-07-08: migrato il paniere Strategy 1 in una cartella <code>used_by_s1</code> guidata dal resolver.</li>
         <li><s>2026-07-08: migrato il matrix universe in <code>engine/data/daily/used</code>, <code>unused</code> e <code>inputs</code>; backtest, downloader, report e VIX input usano il resolver centralizzato.</s> Superato: i dati matrix sono ora in <code>engine/data/daily/assets</code>.</li>
-        <li><s>2026-07-09: resa definitiva la policy "solo <code>SMCI</code>" nel matrix universe: <code>SMCI.csv</code> e' in <code>daily/used</code>, <code>SMCX.csv</code> e' conservato in <code>daily/unused</code>; i delta del backtest rispetto al baseline <code>SMCX</code> sono attesi.</s> Superato: <code>SMCX</code> e' il ticker configurato, <code>SMCI</code> non e' nel matrix.</li>
+        <li><s>2026-07-09: resa definitiva la policy "solo <code>SMCI</code>" nel matrix universe: <code>SMCI.csv</code> e' in <code>daily/used</code>, <code>SMCX.csv</code> e' conservato in <code>daily/unused</code>; i delta del backtest rispetto al baseline <code>SMCX</code> sono attesi.</s> Aggiornato: dopo l'unificazione in <code>engine/data/daily/assets</code>, la policy resta "solo <code>SMCI</code>" tramite lista statica <code>M_ticker</code>.</li>
         <li>2026-07-09: unificata la root dati sotto <code>engine/data/daily</code>: <code>used_by_s1</code> e' stata spostata da <code>engine/data/paniere_spy</code> a <code>engine/data/daily/used_by_s1</code>, e la vecchia cartella <code>paniere_spy</code> e' stata rimossa.</li>
         <li>2026-07-09: standardizzato il naming dei 503 CSV S1 in <code>engine/data/daily/used_by_s1</code>: rimossi i suffissi <code>_dati</code> e aggiornato il downloader S1 per scrivere <code>TICKER.csv</code>.</li>
         <li><s>2026-07-09: rimossa la configurazione ticker statica dal backtest matrix: i ticker sono letti da <code>engine/data/daily/used</code>, i metadati strategie matrix vivono in <code>engine/strategy_config.py</code> e le variabili operative live sono state spostate in <code>live/config.py</code>.</s> Superato: la lista statica <code>M_ticker</code> e' ora la sorgente dell'universo matrix.</li>
+        <li>2026-07-10: riallineata la lista statica <code>M_ticker</code> alla policy "solo <code>SMCI</code>" e rimosso <code>SMCX.csv</code> da <code>engine/data/daily/assets</code>: <code>SMCX</code> non genera combinazioni matrix o report.</li>
       </ul>
     </section>
   </main>
