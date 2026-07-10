@@ -42,6 +42,36 @@
   </nav>
   <main>
 
+      <article class="strategy-card" id="s0">
+        <div class="strategy-head">
+          <span class="badge">S0</span>
+          <h2>Strategy 0 - Momentum cash buffer</h2>
+        </div>
+        <p>Cash buffer del portafoglio ufficiale, separato dalla matrice di segnali; opera sul paniere BIL, GLD, TLT e DBMF.</p>
+        <p>La strategia non usa il contratto run(bars, state, i, params) delle strategie matrix. Viene eseguita come componente dedicato del backtest: ribilancia al mese e registra operazioni di buy, rebalance sell o liquidazione.</p>
+        <div class="grid">
+          <section>
+            <h3>Entrata</h3>
+            <ul><li>a fine mese misura il momentum a 63 barre di BIL, GLD, TLT e DBMF</li><li>gli asset con momentum positivo ricevono pari peso target</li><li>se nessun asset ha momentum positivo, il target diventa 100% BIL</li><li>il ribilanciamento compra solo se la liquidita disponibile copre la differenza target</li></ul>
+          </section>
+          <section>
+            <h3>Uscita</h3>
+            <ul><li>vende al ribilanciamento quando il valore corrente supera il target di oltre 150 USD</li><li>la funzione legacy di cash on demand liquida in ordine BIL, TLT, GLD, DBMF</li><li>le operazioni sono valorizzate all&#x27;Open della data corrente</li></ul>
+          </section>
+          <section>
+            <h3>Backtest S1</h3>
+            <ul><li>quota configurabile della liquidita libera del portafoglio ufficiale</li><li>target equally weighted tra gli asset con momentum positivo</li><li>soglia di attrito pari a 150 USD per evitare micro-ribilanciamenti</li><li>vendita dell&#x27;eccedenza S0 quando il mark-to-market supererebbe il capitale base</li><li>report dedicato in strategy0_report.csv quando tutti i dati sono disponibili</li></ul>
+          </section>
+          <section>
+            <h3>Osservazioni</h3>
+            <ul><li>Richiede dati daily per BIL, GLD, TLT e DBMF; GLD e TLT possono essere condivisi con gli asset matrix.</li><li>BIL e DBMF non devono essere aggiunti alla lista dei moltiplicatori matrix solo per far funzionare Strategy 0.</li><li>L&#x27;esposizione ufficiale include insieme matrix e valore S0; il report renderizza questo risultato salvato dal backtest.</li></ul>
+          </section>
+        </div>
+        <h3>Lettura operativa</h3>
+        <p>Strategy 0 e&#x27; una riserva investita che prova a mantenere la liquidita in asset difensivi o decorrelati. Non crea coppie strategia-ticker: il simulatore portfolio la finanzia con la liquidita libera e la liquida on-demand prima di saltare un ingresso matrix.</p>
+      </article>
+    
+
       <article class="strategy-card" id="s1">
         <div class="strategy-head">
           <span class="badge">S1</span>

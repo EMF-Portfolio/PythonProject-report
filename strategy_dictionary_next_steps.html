@@ -573,6 +573,11 @@
           </tr>
           <tr>
             <td>Universo operativo</td>
+            <td><s>Integrare Strategy 0 dal branch master nel codice master_v2.</s></td>
+            <td><s>Recuperare il cash buffer momentum senza farlo entrare per errore nella matrice <code>strategia x ticker</code>.</s> <s>Applicato iniziale: Strategy 0 restava un overlay separato su <code>BIL</code>, <code>GLD</code>, <code>TLT</code>, <code>DBMF</code>, con report dedicato e stato <code>missing_data</code>.</s> Superato: il backtest ora esegue il ledger portfolio ufficiale e S0 gestisce la quota configurata di liquidita' libera, liquidando on-demand prima di saltare un ingresso matrix.</td>
+          </tr>
+          <tr>
+            <td>Universo operativo</td>
             <td><s>Migrare il paniere Strategy 1 in <code>used_by_s1/unused</code>.</s></td>
             <td><s>Rendere S1 guidata da cartelle e pronta a escludere ticker spostandoli in <code>unused</code>.</s> Applicato: S1 legge <code>engine/data/daily/used_by_s1</code> tramite il resolver centralizzato.</td>
           </tr>
@@ -622,6 +627,11 @@
         <li>2026-07-10: riordinata la tabella <code>Backtest history</code> per mostrare prima risultati e delta, con delta positivi e negativi colorati.</li>
         <li>2026-07-10: aggiunta la pagina <code>strategy_documentation.html</code> con documentazione testuale delle strategie; per ora contiene l'analisi di Strategy 1.</li>
         <li><s>2026-07-10: aggiunto stop loss di emergenza comune al <code>40%</code> per tutte le strategie matrix, con colonna di motivo uscita nei CSV trade e controllo interattivo nel report principale.</s> Aggiornato: il controllo interattivo e' stato rimosso per evitare simulazioni temporali fuorvianti; il report mostra il valore fisso della run e il conteggio stop per strategia/asset.</li>
+        <li>2026-07-10: integrata Strategy 0 dal branch master come overlay separato: report dedicato, asset S0 fuori dalla matrix e stato <code>missing_data</code> quando mancano <code>BIL</code> o <code>DBMF</code>.</li>
+        <li>2026-07-10: il backtest principale e' diventato la fonte del portafoglio ufficiale: salva <code>portfolio_result.json</code> con i default di report, cash-gating condiviso e Strategy 0. Il report renderizza quel risultato; con S0 attiva i controlli browser sono scenari matrix-only dichiarati.</li>
+        <li>2026-07-10: corretto il cash-gating S0: un ingresso matrix ora richiede liquidazione anche quando manca capacita' sotto <code>X</code>, non solo cash. I trade saltati registrano il motivo; resta distinto il caso senza prezzo ETF S0 nella data del segnale.</li>
+        <li>2026-07-10: aggiunti S0 e i suoi asset alle tabelle di contributo annuo del report ufficiale; la curva equity ora distingue attribuzione Matrix e S0 e il grafico esposizione mostra Matrix, S0 e totale. I controlli browser restano scenari matrix-only e non sovrascrivono questi valori ufficiali.</li>
+        <li>2026-07-10: ripristinata l'inizializzazione di <code>Holding Medio Storico</code> quando S0 e' attiva; la sezione usa i dati matrix della configurazione di default, mentre i contributi ufficiali S0 restano separati.</li>
       </ul>
     </section>
   </main>

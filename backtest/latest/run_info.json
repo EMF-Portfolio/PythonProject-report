@@ -1,15 +1,46 @@
 {
-  "timestamp": "2026-07-10T10:41:18.377817",
-  "git_hash": "90f9841",
+  "timestamp": "2026-07-10T14:42:21.793848",
+  "git_hash": "99efcca",
   "strategies": 14,
   "assets": 18,
   "combos": 252,
   "reports": 252,
+  "strategy0": {
+    "enabled": true,
+    "status": "ok",
+    "assets": [
+      "BIL",
+      "GLD",
+      "TLT",
+      "DBMF"
+    ],
+    "missing_assets": [],
+    "allocation_pct": 100.0,
+    "trades": 9132,
+    "liquidations_for_matrix": 5704,
+    "cash": 21099.81,
+    "managed_cash": 1806.04,
+    "final_asset_value": 8193.96,
+    "final_value": 10000.0,
+    "total_buy_value": 1336189.14,
+    "total_sell_value": 1332666.99,
+    "contributions": 1126880.13,
+    "withdrawals_for_matrix": 1112292.95,
+    "capital_cap_withdrawals": 9258.99,
+    "net_profit": 4671.8,
+    "allocated": {
+      "BIL": 3201.86,
+      "GLD": 0.0,
+      "TLT": 0.0,
+      "DBMF": 4992.1
+    },
+    "capital_cap_liquidations": 534
+  },
   "start_year": 2016,
   "X": 10000,
   "Y": 100,
   "emergency_stop_loss_pct": 40.0,
-  "trades_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-10_10-39/trades_report",
+  "trades_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-10_14-40/trades_report",
   "universe": {
     "matrix_tickers": [
       "VT",
@@ -538,6 +569,19 @@
     ],
     "inputs": [
       "VIX"
+    ],
+    "strategy0_enabled": true,
+    "strategy0_assets": [
+      "BIL",
+      "GLD",
+      "TLT",
+      "DBMF"
+    ],
+    "strategy0_available_assets": [
+      "BIL",
+      "DBMF",
+      "GLD",
+      "TLT"
     ],
     "strategies": [
       {
