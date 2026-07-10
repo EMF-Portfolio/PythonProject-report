@@ -632,6 +632,7 @@
         <li>2026-07-10: corretto il cash-gating S0: un ingresso matrix ora richiede liquidazione anche quando manca capacita' sotto <code>X</code>, non solo cash. I trade saltati registrano il motivo; resta distinto il caso senza prezzo ETF S0 nella data del segnale.</li>
         <li>2026-07-10: aggiunti S0 e i suoi asset alle tabelle di contributo annuo del report ufficiale; la curva equity ora distingue attribuzione Matrix e S0 e il grafico esposizione mostra Matrix, S0 e totale. I controlli browser restano scenari matrix-only e non sovrascrivono questi valori ufficiali.</li>
         <li>2026-07-10: ripristinata l'inizializzazione di <code>Holding Medio Storico</code> quando S0 e' attiva; la sezione usa i dati matrix della configurazione di default, mentre i contributi ufficiali S0 restano separati.</li>
+        <li>2026-07-10: integrati S0 e i suoi asset anche nelle sezioni Cross-Market e Holding Medio Storico con matching FIFO dei lotti chiusi; il PnL mensile/annuale/totale dichiara e mostra il dettaglio ufficiale Matrix/S0.</li>
       </ul>
     </section>
   </main>
