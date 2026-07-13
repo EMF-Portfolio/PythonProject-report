@@ -633,6 +633,7 @@
         <li>2026-07-10: aggiunti S0 e i suoi asset alle tabelle di contributo annuo del report ufficiale; la curva equity ora distingue attribuzione Matrix e S0 e il grafico esposizione mostra Matrix, S0 e totale. I controlli browser restano scenari matrix-only e non sovrascrivono questi valori ufficiali.</li>
         <li>2026-07-10: ripristinata l'inizializzazione di <code>Holding Medio Storico</code> quando S0 e' attiva; la sezione usa i dati matrix della configurazione di default, mentre i contributi ufficiali S0 restano separati.</li>
         <li>2026-07-10: integrati S0 e i suoi asset anche nelle sezioni Cross-Market e Holding Medio Storico con matching FIFO dei lotti chiusi; il PnL mensile/annuale/totale dichiara e mostra il dettaglio ufficiale Matrix/S0.</li>
+        <li>2026-07-13: corretto il ricalcolo dei parametri del report: lo scenario client aggiorna solo la Matrix, mentre le serie e tabelle ufficiali di Strategy 0 restano visibili e sono dichiarate come non ricalcolate.</li>
       </ul>
     </section>
   </main>

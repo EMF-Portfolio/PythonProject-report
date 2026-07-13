@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-07-10T15:07:17.762645",
+    "timestamp": "2026-07-13T17:52:04.377045",
     "X": 10000,
     "K": 2.0,
     "Y": 100,
@@ -744,7 +744,7 @@
       ]
     },
     "official_portfolio": true,
-    "source_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-10_15-05"
+    "source_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-13_17-50"
   },
   "screening": [
     {
@@ -4126,7 +4126,7 @@
     "total_commissions": 565.7,
     "net_profit": 21099.81,
     "final_equity": 31099.81,
-    "cagr_pct": 11.39,
+    "cagr_pct": 11.38,
     "max_dd_pct": 8.44,
     "sortino": 3.75,
     "monthly_pnl_pct": {
@@ -5744,7 +5744,7 @@
       "avg_usd": 9999.97,
       "avg_pct_of_capital": 100.0,
       "days_over": 0,
-      "days_total": 2746,
+      "days_total": 2747,
       "pct_days_over": 0.0,
       "first_over_date": null,
       "exceeded": false
@@ -6628,7 +6628,7 @@
       "2023": 50.79,
       "2024": 49.45,
       "2025": 40.99,
-      "2026": 14.54
+      "2026": 14.43
     },
     "yearly_strategy0_exposure_pct": {
       "2016": 53.45,
@@ -6641,7 +6641,232 @@
       "2023": 49.21,
       "2024": 50.55,
       "2025": 59.01,
-      "2026": 85.46
+      "2026": 85.57
+    },
+    "yearly_strategy0_asset_contribution": {
+      "years": [
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025",
+        "2026"
+      ],
+      "columns": [
+        "BIL",
+        "DBMF",
+        "GLD",
+        "TLT"
+      ],
+      "pct": {
+        "2016": {
+          "BIL": -0.04,
+          "DBMF": 0.0,
+          "GLD": -1.12,
+          "TLT": 1.9
+        },
+        "2017": {
+          "BIL": 0.13,
+          "DBMF": 0.0,
+          "GLD": 0.55,
+          "TLT": 0.94
+        },
+        "2018": {
+          "BIL": 0.38,
+          "DBMF": 0.0,
+          "GLD": 0.55,
+          "TLT": -1.21
+        },
+        "2019": {
+          "BIL": 0.21,
+          "DBMF": -0.16,
+          "GLD": 2.52,
+          "TLT": 2.14
+        },
+        "2020": {
+          "BIL": 0.06,
+          "DBMF": -1.26,
+          "GLD": 7.84,
+          "TLT": 2.92
+        },
+        "2021": {
+          "BIL": 0.0,
+          "DBMF": 3.03,
+          "GLD": -1.25,
+          "TLT": 1.01
+        },
+        "2022": {
+          "BIL": 0.35,
+          "DBMF": 4.45,
+          "GLD": 4.0,
+          "TLT": -0.81
+        },
+        "2023": {
+          "BIL": 0.76,
+          "DBMF": 0.05,
+          "GLD": 2.9,
+          "TLT": -1.68
+        },
+        "2024": {
+          "BIL": 0.64,
+          "DBMF": 1.17,
+          "GLD": 3.64,
+          "TLT": -2.09
+        },
+        "2025": {
+          "BIL": 0.74,
+          "DBMF": 1.42,
+          "GLD": 5.69,
+          "TLT": -0.56
+        },
+        "2026": {
+          "BIL": 0.65,
+          "DBMF": 3.89,
+          "GLD": 3.63,
+          "TLT": -1.23
+        }
+      },
+      "usd": {
+        "2016": {
+          "BIL": -4.45,
+          "DBMF": 0.0,
+          "GLD": -111.89,
+          "TLT": 190.47
+        },
+        "2017": {
+          "BIL": 12.85,
+          "DBMF": 0.0,
+          "GLD": 54.73,
+          "TLT": 93.51
+        },
+        "2018": {
+          "BIL": 38.28,
+          "DBMF": 0.0,
+          "GLD": 54.81,
+          "TLT": -121.06
+        },
+        "2019": {
+          "BIL": 20.65,
+          "DBMF": -16.2,
+          "GLD": 252.24,
+          "TLT": 214.05
+        },
+        "2020": {
+          "BIL": 5.77,
+          "DBMF": -126.42,
+          "GLD": 783.75,
+          "TLT": 291.98
+        },
+        "2021": {
+          "BIL": 0.0,
+          "DBMF": 302.78,
+          "GLD": -124.69,
+          "TLT": 100.56
+        },
+        "2022": {
+          "BIL": 34.55,
+          "DBMF": 444.85,
+          "GLD": 399.95,
+          "TLT": -81.4
+        },
+        "2023": {
+          "BIL": 75.97,
+          "DBMF": 5.12,
+          "GLD": 290.4,
+          "TLT": -167.71
+        },
+        "2024": {
+          "BIL": 63.55,
+          "DBMF": 117.14,
+          "GLD": 364.1,
+          "TLT": -208.94
+        },
+        "2025": {
+          "BIL": 73.51,
+          "DBMF": 141.85,
+          "GLD": 569.04,
+          "TLT": -55.64
+        },
+        "2026": {
+          "BIL": 64.64,
+          "DBMF": 388.93,
+          "GLD": 363.25,
+          "TLT": -123.04
+        }
+      },
+      "trades": {
+        "2016": {
+          "BIL": 727,
+          "DBMF": 0,
+          "GLD": 52,
+          "TLT": 95
+        },
+        "2017": {
+          "BIL": 575,
+          "DBMF": 0,
+          "GLD": 98,
+          "TLT": 149
+        },
+        "2018": {
+          "BIL": 636,
+          "DBMF": 0,
+          "GLD": 80,
+          "TLT": 75
+        },
+        "2019": {
+          "BIL": 504,
+          "DBMF": 28,
+          "GLD": 125,
+          "TLT": 198
+        },
+        "2020": {
+          "BIL": 455,
+          "DBMF": 53,
+          "GLD": 213,
+          "TLT": 214
+        },
+        "2021": {
+          "BIL": 0,
+          "DBMF": 461,
+          "GLD": 106,
+          "TLT": 338
+        },
+        "2022": {
+          "BIL": 548,
+          "DBMF": 149,
+          "GLD": 301,
+          "TLT": 53
+        },
+        "2023": {
+          "BIL": 600,
+          "DBMF": 71,
+          "GLD": 113,
+          "TLT": 86
+        },
+        "2024": {
+          "BIL": 576,
+          "DBMF": 65,
+          "GLD": 187,
+          "TLT": 99
+        },
+        "2025": {
+          "BIL": 566,
+          "DBMF": 50,
+          "GLD": 126,
+          "TLT": 132
+        },
+        "2026": {
+          "BIL": 149,
+          "DBMF": 41,
+          "GLD": 31,
+          "TLT": 7
+        }
+      }
     },
     "matrix_exposure": {
       "capital": 10000,
@@ -6650,10 +6875,10 @@
       "peak_positions": 59,
       "peak_date": "2018-04-25",
       "peak_pct_of_capital": 100.0,
-      "avg_usd": 4664.27,
+      "avg_usd": 4662.57,
       "avg_pct_of_capital": 46.6,
       "days_over": 0,
-      "days_total": 2746,
+      "days_total": 2747,
       "pct_days_over": 0.0,
       "first_over_date": null,
       "exceeded": false
@@ -6665,10 +6890,10 @@
       "peak_positions": 50,
       "peak_date": "2016-01-01",
       "peak_pct_of_capital": 100.0,
-      "avg_usd": 5335.7,
+      "avg_usd": 5337.4,
       "avg_pct_of_capital": 53.4,
       "days_over": 0,
-      "days_total": 2746,
+      "days_total": 2747,
       "pct_days_over": 0.0,
       "first_over_date": null,
       "exceeded": false
