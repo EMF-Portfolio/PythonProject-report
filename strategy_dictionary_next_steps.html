@@ -642,7 +642,7 @@
         <li>2026-07-14: corretto il toggle S0 nella panoramica: deselezionarlo mantiene visibili le metriche e i grafici, riferiti alla sola Matrix della stessa run; selezionarlo ripristina il totale ufficiale Matrix + S0.</li>
         <li>2026-07-14: rimosso <code>SMCI</code> da asset matrix, paniere Strategy 1 e lista statica <code>M_ticker</code>; non e' configurato nel live e i report sono stati rigenerati senza il ticker.</li>
         <li>2026-07-16: configurazione operativa fissata a <code>K=3</code>, <code>Z=0,30</code> e stop loss di emergenza <code>20%</code>; i pesi dei ticker restano quelli configurati nel codice. Il report principale e' una vista singola e la pagina sweep e' separata come <code>Parameterized results</code>, statica e rigenerata solo su richiesta esplicita.</li>
-        <li>2026-07-16: aggiunta la pagina statica <code>All trades</code>, alimentata da <code>portfolio_result.json</code>, con tabella completa delle operazioni Strategy 0, filtri per colonna e ordinamento su tutte le colonne.</li>
+        <li>2026-07-16: aggiunta la pagina statica <code>All trades</code>, alimentata da <code>portfolio_result.json</code>, con tabella completa delle operazioni Matrix e Strategy 0, filtri per colonna, ordinamento su tutte le colonne ed esportazione CSV delle righe visibili.</li>
       </ul>
     </section>
   </main>
