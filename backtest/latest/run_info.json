@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-16T10:46:25.501797",
-  "git_hash": "28222e3",
+  "timestamp": "2026-07-16T17:34:30.185410",
+  "git_hash": "a16354e",
   "strategies": 14,
   "assets": 17,
   "combos": 238,
@@ -40,7 +40,7 @@
   "X": 10000,
   "Y": 100,
   "emergency_stop_loss_pct": 20.0,
-  "trades_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-16_10-44/trades_report",
+  "trades_report_dir": "/Users/mfierimonte/Personal-Workspace/PythonProject/results/backtest/2026-07-16_17-33/trades_report",
   "universe": {
     "matrix_tickers": [
       "VT",
