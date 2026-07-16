@@ -163,6 +163,7 @@
 
   <nav>
     <a class="primary" href="backtest/latest/full_report.html">Report principale</a>
+    <a href="parameterized_results.html">Parameterized results</a>
     <a href="ticker_universe.html">Ticker universe</a>
     <a href="strategy_dictionary_next_steps.html">Analisi e next steps</a>
     <a href="strategy_documentation.html">Documentazione strategie</a>
@@ -174,15 +175,15 @@
       <h2>Cos'e Z nel report</h2>
       <p><code>Z</code> e' la soglia di qualita' usata per decidere quali coppie <code>strategia + asset</code> entrano nella simulazione portfolio.</p>
       <div class="note">
-        Nel report corrente la soglia di default e' <code>Z = 0.2</code>. Significa: includi solo le coppie che hanno avuto un profitto medio per trade di circa almeno <code>+0,20%</code> sulla storia disponibile. Con questa soglia passano 139 coppie su 322.
+        Nel report corrente la soglia di default e' <code>Z = 0.3</code>. Significa: includi solo le coppie che hanno avuto un profitto medio per trade di circa almeno <code>+0,30%</code> sulla storia disponibile.
       </div>
       <p>Concettualmente, <code>Z</code> non cambia le regole delle strategie. Cambia il perimetro del portafoglio: piu' e' alto, meno coppie passano; il capitale per trade aumenta perche' viene diviso su meno coppie.</p>
       <p>Nota tecnica: il report dinamico lato browser usa <code>Z</code> come filtro interattivo; la generazione backend usa <code>MIN_AVG_PCT</code>. Sono la stessa idea: una soglia sul profitto medio percentuale della coppia.</p>
       <div class="meta">
-        <div class="stat">Default attuale<b>Z 0.20</b></div>
-        <div class="stat">Coppie attive<b>139 / 322</b></div>
-        <div class="stat">Capitale per trade<b>$143.88</b></div>
-        <div class="stat">Capitale medio usato<b>53.0%</b></div>
+        <div class="stat">Default attuale<b>Z 0.30</b></div>
+        <div class="stat">Coppie attive<b>65 / 238</b></div>
+        <div class="stat">Capitale per trade<b>$461.54</b></div>
+        <div class="stat">Capitale medio usato<b>100.0%</b></div>
       </div>
     </section>
 
@@ -449,7 +450,7 @@
       </ul>
 
       <h3>4. Aumentare K solo dopo la pulizia</h3>
-      <p>Con <code>Z = 0.2</code>, alzare <code>K</code> aumenta profitto storico ma non migliora davvero il 2018:</p>
+      <p>La sensibilita' storica riportata sotto usa <code>Z = 0.2</code>; resta un confronto storico e non modifica il default operativo <code>Z = 0.3</code>.</p>
       <table>
         <thead>
           <tr><th>K</th><th>Net storico</th><th>2018</th><th>Capitale medio</th><th>Trade saltati</th><th>MaxDD</th></tr>
@@ -524,7 +525,7 @@
           <tr>
             <td>Controllo rischio</td>
             <td><s>Aggiungere uno stop loss di emergenza comune a tutte le strategie matrix.</s></td>
-            <td><s>Limitare perdite estreme non gestite dalle singole strategie e permettere analisi di sensibilita'.</s> Applicato: default <code>40%</code>, trigger nel motore comune, valore fisso per run e tabella report delle coppie che hanno toccato lo stop.</td>
+            <td><s>Limitare perdite estreme non gestite dalle singole strategie e permettere analisi di sensibilita'.</s> Applicato: default storico <code>40%</code>, trigger nel motore comune, valore fisso per run e tabella report delle coppie che hanno toccato lo stop. Superato il 2026-07-16: il default operativo e' <code>20%</code>.</td>
           </tr>
           <tr>
             <td>Report piu' utile</td>
@@ -640,6 +641,8 @@
         <li>2026-07-14: arricchita la pagina sweep: ogni cella <code>K × Z</code> riporta anche gli stop loss di emergenza generati; l'elenco completo ora filtra per parametri e ordina ogni colonna senza ricalcolare scenari.</li>
         <li>2026-07-14: corretto il toggle S0 nella panoramica: deselezionarlo mantiene visibili le metriche e i grafici, riferiti alla sola Matrix della stessa run; selezionarlo ripristina il totale ufficiale Matrix + S0.</li>
         <li>2026-07-14: rimosso <code>SMCI</code> da asset matrix, paniere Strategy 1 e lista statica <code>M_ticker</code>; non e' configurato nel live e i report sono stati rigenerati senza il ticker.</li>
+        <li>2026-07-16: configurazione operativa fissata a <code>K=3</code>, <code>Z=0,30</code> e stop loss di emergenza <code>20%</code>; i pesi dei ticker restano quelli configurati nel codice. Il report principale e' una vista singola e la pagina sweep e' separata come <code>Parameterized results</code>, statica e rigenerata solo su richiesta esplicita.</li>
+        <li>2026-07-16: aggiunta la pagina statica <code>All trades</code>, alimentata da <code>portfolio_result.json</code>, con tabella completa delle operazioni Strategy 0, filtri per colonna e ordinamento su tutte le colonne.</li>
       </ul>
     </section>
   </main>
